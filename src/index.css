@@ -24,4 +24,6 @@ body {
 @import url(./components/Header/Header.css);
 /* block "promo" */
 @import url(./components/Promo/Promo.css);
+/* block "NavTab" */
+@import url(./components/NavTab/NavTab.css);
 
