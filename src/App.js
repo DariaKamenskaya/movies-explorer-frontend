@@ -3,6 +3,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 // import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Header from './components/Header/Header';
+import Promo from './components/Promo/Promo';
 
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         element={
           <div>
             <Header/> 
+            <Promo/> 
             {/* <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} 
                        onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} 
                        setCards={setCurrentCards} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>

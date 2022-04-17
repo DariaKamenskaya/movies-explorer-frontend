@@ -22,4 +22,6 @@ body {
 @import url(./vendor/inter.css);
 /* block "header" */
 @import url(./components/Header/Header.css);
+/* block "promo" */
+@import url(./components/Promo/Promo.css);
 

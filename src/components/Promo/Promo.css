@@ -1,0 +1,27 @@
+.promo {
+    margin: 0;
+    padding: 0 ;
+    width: 100%;
+    background-color: #073042;
+    position: relative;
+    display: flex;
+}
+
+.promo__logo {
+    margin: 82px 480px 122px;
+    z-index: 0;
+}
+
+.promo__text {
+    margin: 184px 275px;
+    position: absolute;
+    z-index: 1;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    text-align: center;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+}
