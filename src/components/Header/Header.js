@@ -7,10 +7,10 @@ function Header() {
   return (
     <header className="header">
       <div className="header__nav">
-        <button href="#" className="header__link"><img src={logoUser} alt="Логотип" className="header__logo"/></button>
+        <img src={logoUser} alt="Логотип пользователя" className="header__logo"/>
         <div className="header__nav_right">
-          <Link to={'/'} className={'header__link header__status'}>{'Регистрация'}</Link>
-          <Link to={'/'} className={'header__link header__status'}>{'Войти'}</Link>
+          <Link to={'/sign-up'} className={'header__link header__link_reg'}>{'Регистрация'}</Link>
+          <button className="header__button"> <Link to={'/sign-in'} className={'header__link'}>{'Войти'}</Link></button>
         </div>
       </div>
     </header>
