@@ -21,8 +21,8 @@
   font-style:  normal;
   font-weight: 700;
   font-display: swap;
-  src: url(../styles/Inter-Bold.woff2?v=3.19) format("woff2"),
-       url(../styles/Inter-Bold.woff?v=3.19) format("woff");
+  src: url(../fonts/Inter-Bold.woff2?v=3.19) format("woff2"),
+       url(../fonts/Inter-Bold.woff?v=3.19) format("woff");
 }
 
 @font-face {
@@ -30,7 +30,7 @@
   font-style:  normal;
   font-weight: 600;
   font-display: swap;
-  src: url(../fonts/Inter-SemiBold?v=3.19) format("woff2"),
+  src: url(../fonts/Inter-SemiBold.woff2?v=3.19) format("woff2"),
        url(../fonts/Inter-SemiBold.woff?v=3.19) format("woff");
 }
 
@@ -39,8 +39,8 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(../fonts/SuisseIntl-Regular?v=3.19) format("woff2"),
-       url(../fonts/SuisseIntl-Regular?v=3.19) format("woff");
+  src: url(../fonts/SuisseIntl-Regular.woff2?v=3.19) format("woff2"),
+       url(../fonts/SuisseIntl-Regular.woff?v=3.19) format("woff");
 }
 
 
