@@ -1,0 +1,96 @@
+.aboutProject {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #202020;
+    display: flex;
+    flex-direction: column;
+}
+
+.section__header {
+    margin: 110px 210px 0px 70px;
+    padding-bottom: 25px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 27px;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+    border-bottom: 1px solid #DADADA;
+    width: 1140px;
+}
+
+.aboutProject__table {
+    margin: 70px;
+    grid-row-gap: 0px;
+    grid-column-gap: 40px;
+    -webkit-padding-start: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(550px,1fr));
+    justify-items: center;
+    list-style: none;
+    padding-inline-start: 0
+}
+
+.aboutProject__table_progress {
+    margin: 70px;
+    margin-bottom: 110px;
+    grid-column-gap: 0px;
+    display: grid;
+    grid-template-columns: 230px 915px;
+    grid-template-rows: 36px 36px;
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+.aboutProject__table__items {
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    width: 550px;
+}
+
+.aboutProject__table__title {
+    margin: 0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.04em;
+    color: #FFFFFF;
+}
+
+.aboutProject__table__text {
+    margin: 0;
+    margin-top: 25px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #FFFFFF;
+}
+
+.aboutProject__table__text_progress {
+    margin: 0;
+    padding: 9px 14px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #8B8B8B;
+}
+
+.aboutProject__table__text_progress_white {
+    color: #FFFFFF;
+    background-color: #303030;
+}
+
+.aboutProject__table__text_progress_green {
+    background-color: #3DDC84;
+    color: #000000;
+}

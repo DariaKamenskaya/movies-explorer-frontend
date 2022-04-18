@@ -1,10 +1,12 @@
 import React from 'react';
 // Импорт модулей
 import { Route, Routes } from 'react-router-dom';
+import AboutProject from './components/AboutProject/AboutProject';
 // import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Header from './components/Header/Header';
 import NavTab from './components/NavTab/NavTab';
 import Promo from './components/Promo/Promo';
+
 
 
 function App() {
@@ -18,6 +20,7 @@ function App() {
             <Header/> 
             <Promo/> 
             <NavTab/> 
+            <AboutProject/>
             {/* <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} 
                        onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} 
                        setCards={setCurrentCards} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>

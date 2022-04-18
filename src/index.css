@@ -26,4 +26,6 @@ body {
 @import url(./components/Promo/Promo.css);
 /* block "NavTab" */
 @import url(./components/NavTab/NavTab.css);
+/* block "AboutProject" */
+@import url(./components/AboutProject/AboutProject.css);
 
