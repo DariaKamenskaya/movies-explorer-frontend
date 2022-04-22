@@ -6,6 +6,7 @@ import AboutProject from './components/AboutProject/AboutProject';
 import Header from './components/Header/Header';
 import NavTab from './components/NavTab/NavTab';
 import Promo from './components/Promo/Promo';
+import Techs from './components/Techs/Techs';
 
 
 
@@ -21,6 +22,7 @@ function App() {
             <Promo/> 
             <NavTab/> 
             <AboutProject/>
+            <Techs/>
             {/* <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} 
                        onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} 
                        setCards={setCurrentCards} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>

@@ -28,4 +28,6 @@ body {
 @import url(./components/NavTab/NavTab.css);
 /* block "AboutProject" */
 @import url(./components/AboutProject/AboutProject.css);
+/* block "Techs" */
+@import url(./components/Techs/Techs.css);
 
