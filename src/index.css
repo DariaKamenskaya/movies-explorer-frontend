@@ -30,4 +30,6 @@ body {
 @import url(./components/AboutProject/AboutProject.css);
 /* block "Techs" */
 @import url(./components/Techs/Techs.css);
+/* block "AboutMe" */
+@import url(./components/AboutMe/AboutMe.css);
 

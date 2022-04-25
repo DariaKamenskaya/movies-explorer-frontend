@@ -1,6 +1,7 @@
 import React from 'react';
 // Импорт модулей
 import { Route, Routes } from 'react-router-dom';
+import AboutMe from './components/AboutMe/AboutMe';
 import AboutProject from './components/AboutProject/AboutProject';
 // import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Header from './components/Header/Header';
@@ -23,6 +24,7 @@ function App() {
             <NavTab/> 
             <AboutProject/>
             <Techs/>
+            <AboutMe/>
             {/* <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} 
                        onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} 
                        setCards={setCurrentCards} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>
