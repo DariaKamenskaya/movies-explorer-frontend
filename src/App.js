@@ -6,6 +6,7 @@ import AboutProject from './components/AboutProject/AboutProject';
 // import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Header from './components/Header/Header';
 import NavTab from './components/NavTab/NavTab';
+import Portfolio from './components/Portfolio/Portfolio';
 import Promo from './components/Promo/Promo';
 import Techs from './components/Techs/Techs';
 
@@ -25,6 +26,7 @@ function App() {
             <AboutProject/>
             <Techs/>
             <AboutMe/>
+            <Portfolio/>
             {/* <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} 
                        onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} 
                        setCards={setCurrentCards} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>
