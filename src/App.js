@@ -3,6 +3,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import AboutMe from './components/AboutMe/AboutMe';
 import AboutProject from './components/AboutProject/AboutProject';
+import Footer from './components/Footer/Footer';
 // import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Header from './components/Header/Header';
 import NavTab from './components/NavTab/NavTab';
@@ -27,6 +28,7 @@ function App() {
             <Techs/>
             <AboutMe/>
             <Portfolio/>
+            <Footer/>
             {/* <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} 
                        onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} 
                        setCards={setCurrentCards} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>

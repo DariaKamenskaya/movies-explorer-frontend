@@ -34,4 +34,6 @@ body {
 @import url(./components/AboutMe/AboutMe.css);
 /* block "Portfolio" */
 @import url(./components/Portfolio/Portfolio.css);
+/* block "Footer" */
+@import url(./components/Footer/Footer.css);
 
