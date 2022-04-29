@@ -21,6 +21,10 @@
     width: 1140px;
 }
 
+.section__header_tech {
+    margin-top: 105px;
+}
+
 .aboutProject__table {
     margin: 70px;
     grid-row-gap: 0px;
@@ -35,7 +39,8 @@
 
 .aboutProject__table_progress {
     margin: 70px;
-    margin-bottom: 110px;
+    margin-top: 40px;
+    margin-bottom: 100px;
     grid-column-gap: 0px;
     display: grid;
     grid-template-columns: 230px 915px;
