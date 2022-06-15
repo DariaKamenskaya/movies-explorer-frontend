@@ -12,7 +12,7 @@
   margin-top: 60px;
   margin-left: 70px;
   padding: 0;
-  width: 1140px;
+  width: 89%;
   padding-bottom: 20px;
   font-family: 'Inter';
   font-style: normal;
@@ -67,4 +67,15 @@
   flex-direction: row;
   justify-content: space-between;
   margin: 20px 70px;
+}
+
+
+@media screen and (max-width: 768px) {
+  .footer__subtitle {
+    margin-left: 50px;
+  }
+  .footer__info {
+    margin-left: 35px;
+    margin-right: 35px;
+  }
 }

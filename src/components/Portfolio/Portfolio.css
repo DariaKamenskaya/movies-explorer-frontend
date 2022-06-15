@@ -33,7 +33,7 @@
   padding: 0;
   display: flex;
   border-bottom: 1px solid #424242;
-  width: 1140px;
+  width: 94%;
   align-items: center;
   justify-content: space-between;
 }
@@ -53,4 +53,18 @@
 
 .portfolio__link:hover {
   opacity: 0.6;
+}
+
+
+@media screen and (max-width: 768px) {
+  .portfolio__header{
+    margin-left: 50px;
+  }
+  .portfolio__nav{
+    margin-left: 50px;
+    margin-bottom: 85px;
+  }
+  .portfolio__link{
+    font-size: 28px;
+  }
 }

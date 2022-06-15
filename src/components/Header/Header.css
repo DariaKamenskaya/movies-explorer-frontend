@@ -16,18 +16,6 @@
     max-width: 38px;
 }
 
-@media screen and (max-width: 950px) {
-    .header__logo {
-        margin-left: 25px;
-    }
-}
-
-@media screen and (max-width: 400px) {
-    .header__logo {
-        margin-bottom: 25px;
-        max-width: 105px;
-    }
-}
 
 .header__link {
     margin: 0;
@@ -71,3 +59,23 @@
     padding: 8px 20px;
     text-align: center;
   }
+
+
+  @media screen and (max-width: 950px) {
+    .header__logo {
+        margin-left: 25px;
+    }
+}
+
+@media screen and (max-width: 770px) {
+    .header__button {
+        margin-right: 30px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .header__logo {
+        margin-bottom: 25px;
+        max-width: 105px;
+    }
+}

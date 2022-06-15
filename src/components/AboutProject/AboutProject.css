@@ -18,7 +18,9 @@
     letter-spacing: -0.04em;
     color: #FFFFFF;
     border-bottom: 1px solid #DADADA;
-    width: 1140px;
+    width: 89%;
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 .section__header_tech {
@@ -43,7 +45,8 @@
     margin-bottom: 100px;
     grid-column-gap: 0px;
     display: grid;
-    grid-template-columns: 230px 915px;
+    grid-template-columns: 1fr 4fr;
+    /* grid-template-columns: 230px 915px; */
     grid-template-rows: 36px 36px;
     list-style: none;
     padding-inline-start: 0;
@@ -98,4 +101,28 @@
 .aboutProject__table__text_progress_green {
     background-color: #3DDC84;
     color: #000000;
+}
+
+
+@media screen and (max-width: 768px) {
+    .section__header {
+        margin-left: 50px;
+        margin-top: 87px;
+        width: 87%;
+    }
+    .aboutProject__table__items {
+        width: 320px;
+    }
+    .aboutProject__table {
+        margin: 70px 50px  35px;
+        grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
+        grid-column-gap: 28px;
+    }
+    .aboutProject__table_progress {
+        margin: 50px 50px 95px;
+    }
+    .aboutProject__table__text {
+        font-size: 12px;
+        line-height: 18px;
+    }
 }

@@ -62,3 +62,25 @@
     letter-spacing: -0.04em;
     color: #FFFFFF;
 }
+
+@media screen and (max-width: 768px) {
+    .techs__header {
+        margin: 75px auto 20px;
+    }
+    .techs__text {
+        font-size: 12px;
+        line-height: 18px;
+        margin: 0 21% 85px;
+    }
+    .techs__table {
+        margin: 0px 60px 90px;
+        grid-column-gap: 10px;
+    }
+    .techs__table__article {
+        width: 85px;
+    }
+    .techs__table__text {
+        font-size: 12px;
+        line-height: 15px;
+    }
+}

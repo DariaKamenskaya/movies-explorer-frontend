@@ -8,7 +8,7 @@
 }
 
 .promo__logo {
-    margin: 82px 480px 122px;
+    margin: 82px auto 122px;
     z-index: 0;
 }
 
@@ -24,4 +24,20 @@
     text-align: center;
     letter-spacing: -0.04em;
     color: #FFFFFF;
+}
+
+
+@media screen and (max-width: 769px) {
+    .promo__text {
+        margin: 25% 7%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .promo__text {
+        margin: 42% 7%;
+    }
+    .promo__logo {
+        margin: 223px auto 241px;
+    }
 }
