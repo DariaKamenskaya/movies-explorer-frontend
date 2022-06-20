@@ -79,3 +79,34 @@
     margin-right: 35px;
   }
 }
+
+@media screen and (max-width: 320px) {
+  .footer__subtitle {
+    margin-left: 15px;
+    line-height: 15px;
+    font-size: 12px;
+  }
+  .footer__info {
+    flex-direction: column-reverse;
+    margin: auto;
+  }
+  .footer__nav {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25px;
+    margin-bottom: 20px;
+  }
+  .footer__text {
+    font-size: 12px;
+    line-height: 15px;
+    margin: 6px auto;
+  }
+  .footer__link {
+    font-size: 12px;
+    line-height: 15px;
+    margin: 6px auto;
+  }
+  .footer__link:last-child {
+    margin-right: auto;
+  }
+}

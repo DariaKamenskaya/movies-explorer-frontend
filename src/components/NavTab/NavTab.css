@@ -31,3 +31,11 @@
 .navTab__link:hover {
     text-decoration-line: underline;
 }
+
+
+@media screen and (max-width: 320px) {
+    .navTab__link {
+        margin: 0;
+        margin-right: 15px;
+    }
+  }

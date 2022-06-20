@@ -68,3 +68,20 @@
     font-size: 28px;
   }
 }
+
+@media screen and (max-width: 320px) {
+  .portfolio__header{
+    margin-left: 15px;
+    font-size: 14px;
+    margin-bottom: 25px;
+  }
+  .portfolio__nav{
+    margin-bottom: 67px;
+    margin-left: 15px;
+  }
+  .portfolio__link{
+    font-size: 18px;
+    line-height: 28px;
+    margin: 19px 0;
+  }
+}

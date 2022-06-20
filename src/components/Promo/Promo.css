@@ -41,3 +41,16 @@
         margin: 223px auto 241px;
     }
 }
+
+@media screen and (max-width: 320px) {
+    .promo__logo {
+        margin-top: 145px;
+        margin-bottom: 180px;
+        width: 77%;
+    }
+    .promo__text {
+        margin: 66% 4%;
+        font-size: 31px;
+        line-height: 39px;
+    }
+}

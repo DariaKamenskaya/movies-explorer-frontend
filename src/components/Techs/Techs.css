@@ -84,3 +84,20 @@
         line-height: 15px;
     }
 }
+
+@media screen and (max-width: 320px) {
+    .techs__header {
+        margin: 60px auto 20px;
+        font-size: 30px;
+        line-height: 36px;
+    }
+    .techs__text {
+        font-size: 11px;
+        line-height: 16px;
+        margin: 0 6% 52px;
+    }
+    .techs__table {
+        margin: 0px 70px 65px;
+        row-gap: 8px;
+    }
+}

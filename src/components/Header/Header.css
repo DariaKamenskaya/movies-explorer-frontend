@@ -79,3 +79,18 @@
         max-width: 105px;
     }
 }
+
+@media screen and (max-width: 320px) {
+    .header__logo {
+      margin-left: 15px;
+      margin-bottom: 15px;
+    }
+    .header__link {
+        font-size: 10px;
+    }
+    .header__button {
+        margin-right: 15px;
+        margin-left: 12px;
+        padding: 5px 12px;
+    }
+}

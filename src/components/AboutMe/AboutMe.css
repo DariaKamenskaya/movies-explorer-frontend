@@ -113,3 +113,31 @@
     width: 255px;
   }
 }
+
+@media screen and (max-width: 320px) {
+  .aboutMe__info-container{
+    flex-direction: column-reverse;
+  }
+  .aboutMe__photo{
+    margin: 53px 15px 30px;
+    width: 290px;
+    height: 360px;
+  }
+  .aboutMe__header {
+    font-size: 30px;
+    line-height: 36px;
+  }
+  .aboutMe__info{
+    margin: 5px 15px 65px;
+    width: 290px;
+  }
+  .aboutMe__subtitle{
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .aboutMe__text{
+    margin-bottom: 45px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+}
