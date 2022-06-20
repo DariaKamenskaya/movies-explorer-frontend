@@ -70,7 +70,7 @@
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 920px) {
   .footer__subtitle {
     margin-left: 50px;
   }
@@ -80,7 +80,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 500px) {
   .footer__subtitle {
     margin-left: 15px;
     line-height: 15px;

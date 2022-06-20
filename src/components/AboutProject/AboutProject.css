@@ -104,7 +104,7 @@
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 920px) {
     .section__header {
         margin-left: 50px;
         margin-top: 87px;
@@ -127,7 +127,7 @@
     }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 500px) {
     .section__header {
         margin-left: 15px;
         margin-top: 70px;

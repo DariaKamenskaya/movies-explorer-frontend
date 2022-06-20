@@ -27,7 +27,7 @@
 }
 
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 920px) {
     .promo__text {
         margin: 25% 7%;
     }
@@ -42,7 +42,7 @@
     }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 500px) {
     .promo__logo {
         margin-top: 145px;
         margin-bottom: 180px;

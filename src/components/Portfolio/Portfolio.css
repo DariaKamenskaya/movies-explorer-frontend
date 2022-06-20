@@ -56,7 +56,7 @@
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 920px) {
   .portfolio__header{
     margin-left: 50px;
   }
@@ -69,7 +69,7 @@
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 500px) {
   .portfolio__header{
     margin-left: 15px;
     font-size: 14px;

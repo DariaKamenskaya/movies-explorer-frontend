@@ -80,7 +80,7 @@
     }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 500px) {
     .header__logo {
       margin-left: 15px;
       margin-bottom: 15px;
