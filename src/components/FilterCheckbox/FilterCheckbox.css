@@ -1,0 +1,23 @@
+.filterCheckbox {
+    margin: 0 auto;
+    padding: 0 ;
+    padding-top: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.filterCheckbox__tumbler {
+    margin: 0;
+    margin-right: 20px;
+}
+
+.filterCheckbox__title {
+    margin: 0;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 18px;
+    color: #FFFFFF;
+}

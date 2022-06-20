@@ -10,6 +10,8 @@ import NavTab from './components/NavTab/NavTab';
 import Portfolio from './components/Portfolio/Portfolio';
 import Promo from './components/Promo/Promo';
 import Techs from './components/Techs/Techs';
+import HeaderMovies from './components/HeaderMovies/HeaderMovies';
+import SearchForm from './components/SearchForm/SearchForm';
 
 
 
@@ -29,19 +31,17 @@ function App() {
             <AboutMe/>
             <Portfolio/>
             <Footer/>
-            {/* <Main onEditProfile={handleEditProfileClick} onAddPlace={handleAddPlaceClick} 
-                       onEditAvatar={handleEditAvatarClick} onCardClick={handleCardClick} 
-                       setCards={setCurrentCards} onCardLike={handleCardLike} onCardDelete={handleCardDelete}/>
-                  <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/> 
-                  <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/> 
-                  <AddPlacePopup   isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit}/> 
-               <Footer />
-               <ImagePopup  card={selectedCard}  onClosePopup={closeAllPopups}/>
-               <PopupWithForm name="delete" title="Вы уверены?"  onClosePopup={closeAllPopups}>
-                 <button className="popup__submit-btn popup__submit-btn_delete"  type="submit">
-                   Да
-                 </button> 
-               </PopupWithForm> */}
+          </div>
+        }
+      />
+      <Route
+        path="/movies"
+        element={
+          <div>
+            <HeaderMovies/> 
+            <SearchForm/> 
+           {/* <Cards/> */}
+            <Footer/>
           </div>
         }
       />

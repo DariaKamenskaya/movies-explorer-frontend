@@ -36,4 +36,10 @@ body {
 @import url(./components/Portfolio/Portfolio.css);
 /* block "Footer" */
 @import url(./components/Footer/Footer.css);
+/* block "HeaderMovies" */
+@import url(./components/HeaderMovies/HeaderMovies.css);
+/* block "SearchForm" */
+@import url(./components/SearchForm/SearchForm.css);
+/* block "FilterCheckbox" */
+@import url(./components/FilterCheckbox/FilterCheckbox.css);
 

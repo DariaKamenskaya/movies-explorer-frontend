@@ -1,0 +1,39 @@
+.header_movies {
+    margin: 0;
+    padding: 0 ;
+    width: 100%;
+    background-color: #202020;
+}
+
+.header_icon {
+    margin: 0;
+    margin-left: 15px;
+    background: #313131;
+    border-radius: 50px;
+}
+
+.header__button_icon {
+    margin: 0;
+    margin-right: 80px;
+    background-color: transparent;
+    padding: 0px;
+    display: flex;
+    align-items: baseline;
+}
+
+.header__link_movies {
+    font-size: 14px;
+    line-height: 18px;
+    margin-right: 20px;
+    margin-top: 28px;
+}
+
+.header__link_icon {
+    line-height: 13px;
+}
+
+.header__nav_link {
+    margin: 0px 45px;
+    display: flex;
+    justify-content: space-between;
+}
