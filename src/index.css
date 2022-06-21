@@ -47,4 +47,6 @@ body {
 @import url(./components/MoviesCardList/MoviesCardList.css);
 /* block "MoviesCard" */
 @import url(./components/MoviesCard/MoviesCard.css);
+/* block "ButtonMore" */
+@import url(./components/ButtonMore/ButtonMore.css);
 

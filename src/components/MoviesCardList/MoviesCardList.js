@@ -23,7 +23,6 @@ function MoviesCardList() {
         <MoviesCard/>
         <MoviesCard/>
       </div>
-      <button className="moviesCardList__button-more" type="button" >{"Еще"}</button>
     </section>
 
   );

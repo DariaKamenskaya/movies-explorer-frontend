@@ -13,6 +13,7 @@ import Techs from './components/Techs/Techs';
 import HeaderMovies from './components/HeaderMovies/HeaderMovies';
 import SearchForm from './components/SearchForm/SearchForm';
 import MoviesCardList from './components/MoviesCardList/MoviesCardList';
+import ButtonMore from './components/ButtonMore/ButtonMore';
 
 
 
@@ -37,6 +38,18 @@ function App() {
       />
       <Route
         path="/movies"
+        element={
+          <div>
+            <HeaderMovies/> 
+            <SearchForm/> 
+            <MoviesCardList/>
+            <ButtonMore/>
+            <Footer/>
+          </div>
+        }
+      />
+      <Route
+        path="/saved-movies"
         element={
           <div>
             <HeaderMovies/> 
