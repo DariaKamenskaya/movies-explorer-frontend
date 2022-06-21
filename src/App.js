@@ -14,6 +14,7 @@ import HeaderMovies from './components/HeaderMovies/HeaderMovies';
 import SearchForm from './components/SearchForm/SearchForm';
 import MoviesCardList from './components/MoviesCardList/MoviesCardList';
 import ButtonMore from './components/ButtonMore/ButtonMore';
+import Profile from './components/Profile/Profile';
 
 
 
@@ -59,10 +60,12 @@ function App() {
           </div>
         }
       />
+      <Route
+        path="/profile"
+        element={<Profile/>} 
+      /> 
       {/* <Route path="/sign-up" element={<Register/>} />
       <Route path="/sign-in" element={<Login />} />
-      <Route path="/movies" element={<Register/>} />
-      <Route path="/saved-movies" element={<Register/>} />
       <Route path="/profile" element={<Register/>} /> */}
     </Routes>
   </div>

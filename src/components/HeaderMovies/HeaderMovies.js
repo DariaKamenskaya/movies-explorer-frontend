@@ -12,8 +12,8 @@ function HeaderMovies() {
         <img src={logoUser} alt="Логотип пользователя" className="header__logo"/>
         <div className="header__nav-right header__nav-right_movie">
           <div className="header__nav-link">
-            <Link to={'/sign-up'} className={'header__link header__link_reg header__link_movies'}>{'Фильмы'}</Link>
-            <Link to={'/sign-up'} className={'header__link header__link_reg header__link_movies'}>{'Сохраненные фильмы'}</Link>
+            <Link to={'/movies'} className={'header__link header__link_reg header__link_movies'}>{'Фильмы'}</Link>
+            <Link to={'/saved-movies'} className={'header__link header__link_reg header__link_movies'}>{'Сохраненные фильмы'}</Link>
           </div>
           <button className="header__button header__button_icon">
             <Link to={'/sign-in'} className={'header__link header__link_reg header__link_icon'}>{'Аккаунт'}</Link>
