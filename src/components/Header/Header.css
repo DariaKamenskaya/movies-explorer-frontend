@@ -45,7 +45,7 @@
     justify-content: space-between;
 }
 
-.header__nav_right {
+.header__nav-right {
     margin: 0;
     display: flex;
     justify-content: flex-end;

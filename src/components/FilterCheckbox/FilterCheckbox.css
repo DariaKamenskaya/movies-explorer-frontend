@@ -1,7 +1,7 @@
 .filterCheckbox {
     margin: 0 auto;
     padding: 0 ;
-    padding-top: 30px;
+    margin-top: 30px;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -20,4 +20,11 @@
     font-size: 14px;
     line-height: 18px;
     color: #FFFFFF;
+}
+
+@media screen and (max-width: 400px) {
+    .filterCheckbox__title {
+        font-size: 11px;
+        line-height: 18px;
+    }
 }

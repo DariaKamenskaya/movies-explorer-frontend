@@ -8,7 +8,7 @@ function SearchForm() {
   return (
     <main className="searchForm">
       <div className="searchForm__nav">
-        <img src={iconSearch} alt="Поиск" className="searchForm__icon"/>
+        <img src={iconSearch} alt="Поиск" className="searchForm__icon searchForm__icon-search"/>
         <p className="searchForm__title">{'Фильм'}</p>
         <img src={iconNext} alt="Следующий" className="searchForm__icon"/>
       </div>

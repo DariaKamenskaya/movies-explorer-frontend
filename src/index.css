@@ -15,6 +15,7 @@ body {
   /* выше для экранов больше 1280px отцентрировали весь контент */
   padding: 0;
   font-family: Inter, Arial, sans-serif;
+  background-color: #202020;
 }
 
 
@@ -42,4 +43,8 @@ body {
 @import url(./components/SearchForm/SearchForm.css);
 /* block "FilterCheckbox" */
 @import url(./components/FilterCheckbox/FilterCheckbox.css);
+/* block "MoviesCardList" */
+@import url(./components/MoviesCardList/MoviesCardList.css);
+/* block "MoviesCard" */
+@import url(./components/MoviesCard/MoviesCard.css);
 

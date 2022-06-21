@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import logoUser from '../../images/logo_user.svg'; 
 import iconUser from '../../images/iconUser.svg'; 
+import iconMenu from '../../images/iconMenu.svg'; 
 
 function HeaderMovies() {
 
@@ -9,16 +10,19 @@ function HeaderMovies() {
     <header className="header_movies">
       <div className="header__nav">
         <img src={logoUser} alt="Логотип пользователя" className="header__logo"/>
-        <div className="header__nav_right">
-          <div className="header__nav_link">
+        <div className="header__nav-right header__nav-right_movie">
+          <div className="header__nav-link">
             <Link to={'/sign-up'} className={'header__link header__link_reg header__link_movies'}>{'Фильмы'}</Link>
             <Link to={'/sign-up'} className={'header__link header__link_reg header__link_movies'}>{'Сохраненные фильмы'}</Link>
           </div>
           <button className="header__button header__button_icon">
             <Link to={'/sign-in'} className={'header__link header__link_reg header__link_icon'}>{'Аккаунт'}</Link>
-            <img src={iconUser} alt="Иконка пользователя" className="header_icon"/>
+            <img src={iconUser} alt="Иконка пользователя" className="header__icon"/>
           </button>
         </div>
+        <button className="header__nav-mobile">
+            <img src={iconMenu} alt="Иконка меню" className="header__icon-menu"/>
+          </button>
       </div>
     </header>
   );

@@ -12,6 +12,7 @@ import Promo from './components/Promo/Promo';
 import Techs from './components/Techs/Techs';
 import HeaderMovies from './components/HeaderMovies/HeaderMovies';
 import SearchForm from './components/SearchForm/SearchForm';
+import MoviesCardList from './components/MoviesCardList/MoviesCardList';
 
 
 
@@ -40,7 +41,7 @@ function App() {
           <div>
             <HeaderMovies/> 
             <SearchForm/> 
-           {/* <Cards/> */}
+            <MoviesCardList/>
             <Footer/>
           </div>
         }

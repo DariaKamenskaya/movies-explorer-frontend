@@ -5,7 +5,7 @@
     background-color: #202020;
 }
 
-.header_icon {
+.header__icon {
     margin: 0;
     margin-left: 15px;
     background: #313131;
@@ -21,6 +21,10 @@
     align-items: baseline;
 }
 
+.header__nav-right_movie {
+    margin: 0;
+}
+
 .header__link_movies {
     font-size: 14px;
     line-height: 18px;
@@ -32,8 +36,29 @@
     line-height: 13px;
 }
 
-.header__nav_link {
+.header__nav-link {
     margin: 0px 45px;
     display: flex;
     justify-content: space-between;
+}
+
+.header__icon-menu{
+    margin: 0;
+}
+
+.header__nav-mobile {
+    display: none;
+    margin: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .header__nav-right_movie {
+        display: none;
+    }
+    .header__nav-mobile{
+        display: block;
+        background-color: transparent;
+        border: none;
+        margin-right: 20px;
+    }
 }
