@@ -18,15 +18,33 @@
     color: white;
 }
 
+@media screen and (max-width: 1000px) {
+    .button-more {
+        margin: 61px 33% 103px;
+    }
+}
+
 @media screen and (max-width: 768px) {
     .button-more {
         margin: 61px 28% 103px;
     }
 }
 
+@media screen and (max-width: 720px) {
+    .button-more {
+        margin: 61px 25% 103px;
+    }
+}
+
 @media screen and (max-width: 645px) {
     .button-more {
         margin: 61px 22% 103px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .button-more {
+        margin: 61px 19% 103px;
     }
 }
 

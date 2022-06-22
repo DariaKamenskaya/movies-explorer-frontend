@@ -1,58 +1,94 @@
 .searchForm {
-    margin: 0;
-    padding: 0 ;
-    margin-top: 70px;
-    width: 100%;
+  margin: 0;
+  padding: 0 ;
+  margin-top: 70px;
+  width: 100%;
 }
+
 
 .searchForm__nav {
-    margin: 0 69px  15px;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid #424242;;
-    width: 89%;
-    padding: 0;
-    padding-bottom: 15px;
+  margin: 0 69px  15px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #424242;;
+  width: 89%;
+  padding: 0;
+  padding-bottom: 5px;
 }
 
-.searchForm__icon {
-    margin: 0;
-    padding: 0;
+
+.searchForm__input-text {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+  text-align: center;
+  color: #8B8B8B;
+  width: 100%;
+  height: 40px;
+  border: none;
+  background: transparent;
+  box-sizing: border-box;
 }
+
+
+.searchForm__button-search {
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  background-image: url(../../images/iconSearch.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 34px;
+  background-size: 30px;
+  height: 34px;
+}
+
 
 .searchForm__icon-search{
-    margin: 0;
+  margin: 0;
 }
 
-.searchForm__title {
-    margin: 0;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 28px;
-    line-height: 34px;
-    text-align: center;
-    color: #8B8B8B;
+
+.searchForm__button-submit {
+  margin: 0;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
+  background-image: url(../../images/iconNext.svg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 34px;
+  background-size: 30px;
+  height: 34px;
 }
 
 @media screen and (max-width: 768px) {
-    .searchForm {
-        margin-top: 85px;
-    }
-    .searchForm__nav {
-        margin: 0 45px  15px;
-    }
+  .searchForm {
+    margin-top: 85px;
+  }
+  .searchForm__nav {
+    margin: 0 45px  15px;
+  }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 630px) {
     .searchForm__icon-search {
-        display: none;
+      display: none;
     }
-    .searchForm__title {
-        font-size: 18px;
-        line-height: 22px;
-    }
-    .searchForm__nav {
-        margin: 0 20px 15px;
-    }
+  }
+
+@media screen and (max-width: 400px) {
+  .searchForm__input-text {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  .searchForm__nav {
+    margin: 0 20px 15px;
+  }
 }
+
