@@ -9,6 +9,11 @@
   color: #FFFFFF;
 }
 
+.welcome__logo {
+  margin: 67px 35% 0px;
+  max-width: 38px;
+}
+
 .welcome-link {
   font-family: 'Inter';
   font-style: normal;
@@ -25,6 +30,15 @@
 
 .welcome-link_red {
   color: #EE3465;
+}
+
+.welcome-link_blue {
+  color: blue;
+}
+
+.welcome-link_grey {
+  color: #8B8B8B;
+  margin-right: 5px;
 }
 
 .profile__form {
@@ -85,5 +99,8 @@
   }
   .profile__form {
     max-width: 260px;
+  }
+  .welcome__logo {
+    margin: 67px 44% 0px;
   }
 }
