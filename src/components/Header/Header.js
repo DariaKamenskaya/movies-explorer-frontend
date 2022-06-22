@@ -9,8 +9,8 @@ function Header() {
       <div className="header__nav">
         <img src={logoUser} alt="Логотип пользователя" className="header__logo"/>
         <div className="header__nav-right">
-          <Link to={'/sign-up'} className={'header__link header__link_reg'}>{'Регистрация'}</Link>
-          <button className="header__button"> <Link to={'/sign-in'} className={'header__link'}>{'Войти'}</Link></button>
+          <Link to={'/signup'} className={'header__link header__link_reg'}>{'Регистрация'}</Link>
+          <button className="header__button"> <Link to={'/signin'} className={'header__link'}>{'Войти'}</Link></button>
         </div>
       </div>
     </header>

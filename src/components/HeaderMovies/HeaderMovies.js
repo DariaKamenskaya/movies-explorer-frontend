@@ -9,7 +9,7 @@ function HeaderMovies() {
   return (
     <header className="header_movies">
       <div className="header__nav">
-        <img src={logoUser} alt="Логотип пользователя" className="header__logo"/>
+      <Link to={'/'}><img src={logoUser} alt="Логотип пользователя" className="header__logo"/></Link>
         <div className="header__nav-right header__nav-right_movie">
           <div className="header__nav-link">
             <Link to={'/movies'} className={'header__link header__link_reg header__link_movies'}>{'Фильмы'}</Link>

@@ -16,6 +16,7 @@ import MoviesCardList from './components/MoviesCardList/MoviesCardList';
 import ButtonMore from './components/ButtonMore/ButtonMore';
 import Profile from './components/Profile/Profile';
 import Login from './components/Login/Login';
+import Register from './components/Register/Register';
 
 
 
@@ -69,9 +70,10 @@ function App() {
         path="/signin" 
         element={<Login/>} 
       />
-      {/* <Route path="/signup" element={<Register/>} />
-      <Route path="/signin" element={<Login />} />
-      <Route path="/profile" element={<Register/>} /> */}
+      <Route
+        path="/signup"
+        element={<Register/>}
+      />
     </Routes>
   </div>
   );
