@@ -18,6 +18,10 @@
     color: white;
 }
 
+.button-more:hover {
+    opacity: .5;
+}
+
 @media screen and (max-width: 1000px) {
     .button-more {
         margin: 61px 33% 103px;
