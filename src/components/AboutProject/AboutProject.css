@@ -8,8 +8,9 @@
 }
 
 .section__header {
-    margin: 110px 210px 0px 70px;
+    margin: 0px 210px 0px 70px;
     padding-bottom: 25px;
+    padding-top: 110px;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 400;
@@ -42,7 +43,7 @@
 .aboutProject__table_progress {
     margin: 70px;
     margin-top: 40px;
-    margin-bottom: 100px;
+    margin-bottom: 95px;
     grid-column-gap: 0px;
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -104,12 +105,7 @@
 }
 
 
-@media screen and (max-width: 920px) {
-    .section__header {
-        margin-left: 50px;
-        margin-top: 87px;
-        width: 87%;
-    }
+@media screen and (max-width: 1260px) {
     .aboutProject__table__items {
         width: 320px;
     }
@@ -117,6 +113,15 @@
         margin: 70px 50px  35px;
         grid-template-columns: repeat(auto-fit,minmax(320px,1fr));
         grid-column-gap: 28px;
+    }
+}
+
+
+@media screen and (max-width: 920px) {
+    .section__header {
+        margin-left: 50px;
+        padding-top: 87px;
+        width: 87%;
     }
     .aboutProject__table_progress {
         margin: 50px 50px 95px;
@@ -127,18 +132,13 @@
     }
 }
 
-@media screen and (max-width: 500px) {
-    .section__header {
-        margin-left: 15px;
-        margin-top: 70px;
-        font-size: 18px;
-        line-height: 22px;
-        width: 89%;
-        padding-bottom: 30px;
-    }
+@media screen and (max-width: 765px) {
     .aboutProject__table {
         margin: 60px 15px  6px;
         grid-template-columns: repeat(auto-fit,minmax(285px,1fr));
+    }
+    .aboutProject__table__items {
+        width: 285px;
     }
     .aboutProject__table__title {
         font-size: 18px;
@@ -150,8 +150,16 @@
         margin-top: 15px;
         margin-bottom: 55px;
     }
-    .aboutProject__table__items {
-        width: 285px;
+}
+
+@media screen and (max-width: 500px) {
+    .section__header {
+        margin-left: 15px;
+        padding-top: 70px;
+        font-size: 18px;
+        line-height: 22px;
+        width: 89%;
+        padding-bottom: 30px;
     }
     .aboutProject__table_progress {
         margin: 0px 17px 55px;
