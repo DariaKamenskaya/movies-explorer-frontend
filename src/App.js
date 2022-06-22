@@ -45,7 +45,7 @@ function App() {
           <div>
             <HeaderMovies/> 
             <SearchForm/> 
-            <MoviesCardList/>
+            <MoviesCardList cardButtonClassName={'moviesCard__heart-button'}/>
             <ButtonMore/>
             <Footer/>
           </div>
@@ -57,7 +57,7 @@ function App() {
           <div>
             <HeaderMovies/> 
             <SearchForm/> 
-            <MoviesCardList/>
+            <MoviesCardList cardButtonClassName={'moviesCard__close-button'}/>
             <Footer/>
           </div>
         }

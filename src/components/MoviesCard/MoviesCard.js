@@ -1,6 +1,6 @@
 import moviePoster from '../../images/moviePoster.svg'; 
 
-function MoviesCard() {
+function MoviesCard(props) {
 
 
   return(
@@ -9,7 +9,7 @@ function MoviesCard() {
       <div className="moviesCard__title-block">
         <div className="moviesCard__likes">
           <p className="moviesCard__title">{"33 слова о дизайне"}</p>
-          <button className="moviesCard__heart-button"  type="button" ></button>
+          <button className={props.cardButtonClassName} type="button" ></button>
         </div>
         <p className="moviesCard__subtitle">{"1ч42м"}</p>
       </div>

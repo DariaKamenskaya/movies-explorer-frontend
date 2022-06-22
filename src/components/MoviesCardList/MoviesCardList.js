@@ -1,27 +1,27 @@
 
 import MoviesCard from '../MoviesCard/MoviesCard';
 
-function MoviesCardList() {
+function MoviesCardList(props) {
 
   return (
     <section className="moviesList">
       <div className="moviesCardList">
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
-        <MoviesCard/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
+        <MoviesCard cardButtonClassName={props.cardButtonClassName}/>
       </div>
     </section>
 
