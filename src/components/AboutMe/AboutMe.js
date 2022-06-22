@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function AboutMe() {
 
   return (
-    <section className="aboutMe">
+    <section className="aboutMe" id='aboutMe'>
       <h2 className={'section__header'}>Студент</h2>
       <div className={'aboutMe__info-container'}>
       <div className={'aboutMe__info'}>
@@ -14,8 +14,8 @@ function AboutMe() {
             и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить. С 2015 года работал в компании 
             «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.</p>
         <div className={'aboutMe__nav'}>
-              <Link to={'/sign-up'} className={'aboutMe__link'}>{'Facebook'}</Link>
-              <Link to={'/sign-up'} className={'aboutMe__link'}>{'Github'}</Link>
+          <a href="https://en.wikipedia.org/wiki/Facebook" rel="noopener noreferrer" target="_blank" className="aboutMe__link">Facebook</a>
+          <a href="https://github.com/DariaKamenskaya" rel="noopener noreferrer" target="_blank" className="aboutMe__link">Github</a>
         </div>
       </div>
       <img src={portretUser} alt="Портрет пользователя" className="aboutMe__photo"/>
