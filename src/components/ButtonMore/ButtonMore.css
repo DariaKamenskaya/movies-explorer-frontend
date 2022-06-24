@@ -1,0 +1,66 @@
+.button-more {
+    margin: 7px 35% 103px;
+    padding: 0px;
+    cursor: pointer;
+    background-color: transparent;
+    width: 320px;
+    height: 36px;
+    border-color: #424242;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 15px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    color: white;
+}
+
+.button-more:hover {
+    opacity: .5;
+}
+
+@media screen and (max-width: 1000px) {
+    .button-more {
+        margin: 61px 33% 103px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .button-more {
+        margin: 61px 28% 103px;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .button-more {
+        margin: 61px 25% 103px;
+    }
+}
+
+@media screen and (max-width: 645px) {
+    .button-more {
+        margin: 61px 22% 103px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .button-more {
+        margin: 61px 19% 103px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .button-more {
+        margin: 61px 18% 103px;
+        width: 240px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .button-more {
+        margin: 61px 11% 103px;
+    }
+}

@@ -1,0 +1,41 @@
+.navTab {
+    margin: 0;
+    padding: 25px 0px;
+    width: 100%;
+    background-color: #272727;
+    display: flex;
+}
+
+.navTab__menu{
+    margin: 0 auto;
+    display: flex;
+    padding: 0;
+}
+
+.navTab__link {
+    margin: 0;
+    margin-right: 40px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    text-decoration: none;
+    color: #FFFFFF;
+}
+
+.navTab__link:last-child {
+    margin-right: 0px;
+}
+
+.navTab__link:hover {
+    text-decoration-line: underline;
+}
+
+
+@media screen and (max-width: 500px) {
+    .navTab__link {
+        margin: 0;
+        margin-right: 15px;
+    }
+  }
