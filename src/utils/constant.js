@@ -1,0 +1,1 @@
+export const baseUrlMovie = 'https://api.nomoreparties.co/beatfilm-movies';
