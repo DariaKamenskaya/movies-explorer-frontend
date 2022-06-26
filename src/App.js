@@ -35,12 +35,10 @@ function App() {
 
   useEffect(() => {
     // const cards = JSON.parse(localStorage.getItem('all_movie' || '[]'));
-    console.log(cards);
     if (!cards.length) {
       // запрос в API за пользовательскими данными
       apiBeatfilmMovies.getInitialMovies()
         .then((res) => {
-          console.log(res);
           updateMovies(res)
         })
         .catch((err) => {
@@ -115,9 +113,7 @@ function App() {
           <div>
             <CurrentCardsContext.Provider value={cards}>
               <HeaderMovies/> 
-              <SearchForm/> 
-              <MoviesCardList cardButtonClassName={'moviesCard__heart-button'}/>
-              <ButtonMore/>
+              <SearchForm/>
               <Footer/>
             </CurrentCardsContext.Provider>
           </div>

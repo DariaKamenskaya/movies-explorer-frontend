@@ -4,15 +4,13 @@ import {CurrentCardsContext}  from '../../contexts/CurrentCardsContext';
 
 function MoviesCardList(props) {
 
-  // Подписываемся на контекст CurrentCardsContext
-  const cardsData = React.useContext(CurrentCardsContext);
 
 
   function CardList(props) {
-    const cards = props.cards.splice(0,12);
-    const listCards = cards.map((card) =>
-      <MoviesCard card={card}  cardButtonClassName={props.cardButtonClassName}/>
-    );
+    const cards = props.cards;
+      const listCards = cards.map((card) =>
+        <MoviesCard card={card} key={card.id} cardButtonClassName={props.cardButtonClassName}/>
+      );
     return (
       <div className="moviesCardList">
         {listCards}
@@ -23,7 +21,7 @@ function MoviesCardList(props) {
 
   return (
     <section className="moviesList">
-      <CardList cards={cardsData}  cardButtonClassName={props.cardButtonClassName}/> 
+      <CardList cards={props.cards}  cardButtonClassName={props.cardButtonClassName}/> 
     </section>
 
   );
