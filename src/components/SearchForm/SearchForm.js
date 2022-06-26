@@ -10,7 +10,9 @@ function SearchForm() {
   const cardsData = React.useContext(CurrentCardsContext);
 
   // Стейт, в котором содержится значение инпута
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(null);
+  // Стейт, в котором содержатся отфильтрованные карточки
+  const [cardsFiltredQuery, setCardsFiltredQuery] = useState([]);
 
   // Обработчик изменения инпута обновляет стейт
   const handleChangeQuery = (e) => {
@@ -20,9 +22,10 @@ function SearchForm() {
   const handleSearchQuery = (evn) => {
     evn.preventDefault();
     localStorage.setItem('query', query);
+    const cardsFiltredQueryLocal = cardsData.filter(card => card.nameRU.includes(query)).splice(0,12);
+    setCardsFiltredQuery(cardsFiltredQueryLocal);
   };
 
-  const cardsFiltredQuery = cardsData.filter(card => card.nameRU.includes(query)).splice(0,12);
 
   return (
     <main className="searchForm">
@@ -33,13 +36,15 @@ function SearchForm() {
         <button type="button" className="searchForm__button-submit"  onClick={handleSearchQuery}></button>
       </form>
       <FilterCheckbox/>
-      { (query !== '') &&
-        <MoviesCardList cardButtonClassName={'moviesCard__heart-button'} cards={cardsFiltredQuery}></MoviesCardList>
-      }
-      { (query === '') &&
+      { (cardsFiltredQuery.length === 0) &&
         <p className="searchForm__message-nothing">Ничего не найдено</p>
       }
-      <ButtonMore/>
+      { (query !== '' && cardsFiltredQuery.length !== 0) &&
+        <MoviesCardList cardButtonClassName={'moviesCard__heart-button'} cards={cardsFiltredQuery}></MoviesCardList>
+      }
+      {(query !== '' && cardsFiltredQuery.length !== 0) &&
+        <ButtonMore/>
+      }
     </main>
   );
 }
