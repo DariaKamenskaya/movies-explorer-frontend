@@ -81,24 +81,44 @@ function SearchForm(props) {
   const handleSearchQuery = (evn) => {
     evn.preventDefault();
     localStorage.setItem('sessionStorageQuery', query);
-    if (query === "") setErrorText('Нужно ввести ключевое слово'); 
-    setIsPreloader(true);
-    const cardsFiltred = cardsData.filter(card => card.nameRU.includes(query));
-    localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
-    setIsPreloader(false);
-    setCardsFiltredQuery(cardsFiltred.splice(0,movieCount));
-    //const cardsFiltredQueryLocal = cardsFiltred.splice(0,movieCount);
-    //setCardsFiltredQueryRender(cardsFiltredQueryLocal);
-    console.log('handleSearchQuery', props.windowSize, movieCount, cardsFiltred);
+    if (query === "") {
+      setErrorText('Нужно ввести ключевое слово'); 
+    } else {
+      setIsPreloader(true);
+      const cardsFiltred = cardsData.filter(card => card.nameRU.includes(query));
+      if (isCheckBox) {
+        handleSearchCheckBox(cardsFiltred);
+      } else {
+        localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
+        setCardsFiltredQuery(cardsFiltred.splice(0,movieCount));
+      }
+      setIsPreloader(false);
+      //const cardsFiltredQueryLocal = cardsFiltred.splice(0,movieCount);
+      //setCardsFiltredQueryRender(cardsFiltredQueryLocal);
+      console.log('handleSearchQuery', props.windowSize, movieCount, cardsFiltred);
+    };
   };
 
   // Обработчик переключателя короткометражек
   const handleCheckBoxButton = (e) => {
     e.preventDefault();
-    console.log('isCheckBox1', isCheckBox);
     setIsCheckBox(isCheckBox =>!isCheckBox);
-    console.log('isCheckBox2',isCheckBox);
     localStorage.setItem('isCheckBox', JSON.stringify(!isCheckBox));
+    if (!isCheckBox) {
+      (cardsFiltredQuery.length !== 0)  ?  handleSearchCheckBox(JSON.parse(localStorage.getItem("query_movie"))) :  handleSearchCheckBox(cardsData);
+    }  else {
+      const cardsFiltred = cardsData.filter(card => card.nameRU.includes(query));
+      localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
+      setCardsFiltredQuery(cardsFiltred.splice(0,movieCount));
+    }
+  }
+
+
+  // Обработчик переключателя короткометражек
+  const handleSearchCheckBox = (cards) => {
+    const cardsFiltred = cards.filter(card => card.duration < 40);
+    localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
+    setCardsFiltredQuery(cardsFiltred.splice(0,movieCount));
   }
 
 
