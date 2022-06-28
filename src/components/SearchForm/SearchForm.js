@@ -22,8 +22,24 @@ function SearchForm(props) {
   const [isPreloader, setIsPreloader] = useState(false);
   // Стейт, в котром содержится сообщение об ошибке
   const [errorText, setErrorText] = useState("");
+  // Стейт, в котром содержится флаг переключателя короткометражек
+  const getStoredStateCheckBox = () => {
+    // Извлечение из локального хранилища ранее введенного состояния для кнопки переключатель короткометражек
+    const sessionIsCheckBox = localStorage.getItem("isCheckBox");
+    const initialIsCheckBox = (sessionIsCheckBox !== null) ? JSON.parse(localStorage.getItem("isCheckBox")) : false;
+    return initialIsCheckBox;
+  };
+  const [isCheckBox, setIsCheckBox] = useState(getStoredStateCheckBox);
   // Извлечение из локального хранилища ранее введенного запроса
   const sessionStorageQuery = localStorage.getItem("sessionStorageQuery");
+  
+
+  // Создаём переменную, которую после зададим в `className` для кнопки переключатель короткометражек
+  const checkBoxButtonClassName = (
+    `${isCheckBox ?  'filterCheckbox__tumbler-active' :  'filterCheckbox__tumbler-disactive'}`
+  );
+
+
 
   useEffect(() => {
     handleChangeWidth();
@@ -40,6 +56,8 @@ function SearchForm(props) {
       setCardsFiltredQuery(cardsFiltredQueryLocal.splice(0,movieCount));
       console.log('handleChangeWidth1',cardsFiltredQueryLocal);
     }
+    //if (sessionIsCheckBox !== null) setIsCheckBox(JSON.parse(localStorage.getItem("isCheckBox")));
+    console.log('isCheckBox', isCheckBox);
   }
 
   const handleRander = (e) => {
@@ -74,6 +92,15 @@ function SearchForm(props) {
     console.log('handleSearchQuery', props.windowSize, movieCount, cardsFiltred);
   };
 
+  // Обработчик переключателя короткометражек
+  const handleCheckBoxButton = (e) => {
+    e.preventDefault();
+    console.log('isCheckBox1', isCheckBox);
+    setIsCheckBox(isCheckBox =>!isCheckBox);
+    console.log('isCheckBox2',isCheckBox);
+    localStorage.setItem('isCheckBox', JSON.stringify(!isCheckBox));
+  }
+
 
   return (
     <main className="searchForm">
@@ -84,7 +111,7 @@ function SearchForm(props) {
         <button type="button" className="searchForm__button-submit"  onClick={handleSearchQuery}></button>
       </form>
       <span id="search-input-error" className="searchForm__input-error">{errorText}</span>
-      <FilterCheckbox/>
+      <FilterCheckbox classTumbler={checkBoxButtonClassName} onClick={handleCheckBoxButton}/>
       { (cardsFiltredQuery.length === 0 || query === "") &&
         <p className="searchForm__message-nothing">Ничего не найдено</p>
       }

@@ -1,10 +1,12 @@
-import smalltumb from '../../images/smalltumb.svg'; 
 
-function FilterCheckbox() {
+
+function FilterCheckbox(props) {
+
+  console.log('FilterCheckbox', props.classTumbler)
 
   return (
     <div className="filterCheckbox">
-      <img src={smalltumb} alt="Тумблер" className="filterCheckbox__tumbler"/>
+      <button  className={props.classTumbler} onClick={props.onClick}></button>
       <p className="filterCheckbox__title">{'Короткометражки'}</p>
     </div>
   );
