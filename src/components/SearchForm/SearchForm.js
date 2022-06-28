@@ -84,7 +84,7 @@ function SearchForm(props) {
           <MoviesCardList cardButtonClassName={'moviesCard__heart-button'} cards={cardsFiltredQuery}></MoviesCardList>
         </section>
       }
-      {(query !== "" && cardsFiltredQuery.length === movieCount && cardsFiltredQuery.length > 3) &&
+      {((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length === movieCount && cardsFiltredQuery.length > 3) &&
         <ButtonMore onClick={handleRander}/>
       }
     </main>
