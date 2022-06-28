@@ -1,7 +1,7 @@
-function ButtonMore() {
+function ButtonMore(props) {
 
   return (
-    <button className="button-more" type="button" >{"Еще"}</button>
+    <button className="button-more" type="button" onClick={props.onClick}>{"Еще"}</button>
   );
 }
   

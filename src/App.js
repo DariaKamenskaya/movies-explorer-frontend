@@ -19,11 +19,14 @@ import Register from './components/Register/Register';
 import  {apiBeatfilmMovies}  from './utils/MoviesApi';
 import {CurrentCardsContext}  from './contexts/CurrentCardsContext';
 
+import useWindowDimensions  from './utils/windowsUpdate';
 
 
 
 
 function App() {
+
+  const {windowSize, movieCount} = useWindowDimensions();
 
 
   const [cards, setCards] = useState([]);
@@ -113,7 +116,7 @@ function App() {
           <div>
             <CurrentCardsContext.Provider value={cards}>
               <HeaderMovies/> 
-              <SearchForm/>
+              <SearchForm  windowSize={windowSize} movieCount={movieCount} />
               <Footer/>
             </CurrentCardsContext.Provider>
           </div>
@@ -125,7 +128,7 @@ function App() {
           <div>
             <HeaderMovies/> 
             <SearchForm/> 
-            <MoviesCardList cardButtonClassName={'moviesCard__close-button'}/>
+            {/* <MoviesCardList cardButtonClassName={'moviesCard__close-button'}/> */}
             <Footer/>
           </div>
         }
