@@ -10,6 +10,7 @@ export default function useWindowDimensions() {
 
   const updateWidth = () => {
     setWindowSize(window.innerWidth);
+    console.log(window.innerWidth, windowSize);
     if (windowSize > 768) {
       setMovieCount(12);
     } else if (windowSize < 768 && windowSize > 420) {

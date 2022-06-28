@@ -27,6 +27,10 @@ import useWindowDimensions  from './utils/windowsUpdate';
 function App() {
 
   const {windowSize, movieCount} = useWindowDimensions();
+    // стейт для ширины экрана
+/*     const [windowSize, setWindowSize] = useState(1280);
+    // Стейт, в котором содержится значение генерируемых карточек
+    const [movieCount, setMovieCount] = useState(8); */
 
 
   const [cards, setCards] = useState([]);
@@ -52,6 +56,15 @@ function App() {
       setCards(cards);
     }
   }, []);
+
+/*   useEffect(() => {
+    useWindowDimensions()
+      .then((res) => {
+        setWindowSize(res.windowSize);
+        setMovieCount (res.movieCount);
+      }
+      )
+  }, [windowSize]) */
 
 
 

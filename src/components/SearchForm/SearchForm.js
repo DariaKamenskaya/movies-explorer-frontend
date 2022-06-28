@@ -3,6 +3,7 @@ import {CurrentCardsContext}  from '../../contexts/CurrentCardsContext';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import ButtonMore from '../ButtonMore/ButtonMore';
+import Preloader from '../Preloader/Preloader'
 
 function SearchForm(props) {
 
@@ -17,6 +18,10 @@ function SearchForm(props) {
   //const [cardsFiltredQueryRender, setCardsFiltredQueryRender] = useState([]);
   // Стейт, в котором содержится значение генерируемых карточек
   const [movieCount, setMovieCount] = useState(8);
+  // Стейт, в котром содержится флаг прелоадера
+  const [isPreloader, setIsPreloader] = useState(false);
+  // Стейт, в котром содержится сообщение об ошибке
+  const [errorText, setErrorText] = useState("");
   // Извлечение из локального хранилища ранее введенного запроса
   const sessionStorageQuery = localStorage.getItem("sessionStorageQuery");
 
@@ -28,7 +33,7 @@ function SearchForm(props) {
 
   const handleChangeWidth = () => {
     setMovieCount(props.movieCount);
-    console.log('handleChangeWidth',  movieCount, sessionStorageQuery);
+    console.log('handleChangeWidth',  movieCount, sessionStorageQuery, window.innerWidth);
     if (sessionStorageQuery !== null  && sessionStorageQuery !== "") {
       setQuery(sessionStorageQuery);
       const cardsFiltredQueryLocal = JSON.parse(localStorage.getItem("query_movie"));
@@ -58,8 +63,11 @@ function SearchForm(props) {
   const handleSearchQuery = (evn) => {
     evn.preventDefault();
     localStorage.setItem('sessionStorageQuery', query);
+    if (query === "") setErrorText('Нужно ввести ключевое слово'); 
+    setIsPreloader(true);
     const cardsFiltred = cardsData.filter(card => card.nameRU.includes(query));
     localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
+    setIsPreloader(false);
     setCardsFiltredQuery(cardsFiltred.splice(0,movieCount));
     //const cardsFiltredQueryLocal = cardsFiltred.splice(0,movieCount);
     //setCardsFiltredQueryRender(cardsFiltredQueryLocal);
@@ -71,13 +79,17 @@ function SearchForm(props) {
     <main className="searchForm">
       <form className="searchForm__nav">
         <button type="button" className="searchForm__button-search searchForm__icon-search" ></button>
-        <input required id="name" name="name" type="text" placeholder="Фильм" className="searchForm__input-text"
+        <input required minLength="1" maxLength="30" id="name" name="name" type="text" placeholder="Фильм" className="searchForm__input-text"
           onChange={handleChangeQuery} value={query}/>
         <button type="button" className="searchForm__button-submit"  onClick={handleSearchQuery}></button>
       </form>
+      <span id="search-input-error" className="searchForm__input-error">{errorText}</span>
       <FilterCheckbox/>
-      { (cardsFiltredQuery.length === 0) &&
+      { (cardsFiltredQuery.length === 0 || query === "") &&
         <p className="searchForm__message-nothing">Ничего не найдено</p>
+      }
+      { (isPreloader) &&
+          <Preloader />
       }
       { ((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length !== 0) &&
         <section className="moviesList">

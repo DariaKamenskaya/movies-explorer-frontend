@@ -97,6 +97,18 @@
 }
 
 
+.searchForm__input-error {
+  margin: 0;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FF0000;
+  display: flex;
+  justify-content: center;
+}
+
 @media screen and (max-width: 768px) {
   .searchForm {
     margin-top: 85px;
