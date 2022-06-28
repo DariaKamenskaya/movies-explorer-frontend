@@ -16,7 +16,9 @@ function SearchForm(props) {
   // Стейт, в котором содержатся отфильтрованные карточки для вывода на экран
   //const [cardsFiltredQueryRender, setCardsFiltredQueryRender] = useState([]);
   // Стейт, в котором содержится значение генерируемых карточек
-    const [movieCount, setMovieCount] = useState(8);
+  const [movieCount, setMovieCount] = useState(8);
+  // Извлечение из локального хранилища ранее введенного запроса
+  const sessionStorageQuery = localStorage.getItem("sessionStorageQuery");
 
   useEffect(() => {
     handleChangeWidth();
@@ -26,11 +28,12 @@ function SearchForm(props) {
 
   const handleChangeWidth = () => {
     setMovieCount(props.movieCount);
-    console.log('handleChangeWidth',  movieCount);
-    const cardsFiltredQueryLocal = JSON.parse(localStorage.getItem('query_movie'));
-    console.log('handleChangeWidth1',cardsFiltredQueryLocal);
-    if (query !== '' &&  cardsFiltredQueryLocal.length !== 0) {
+    console.log('handleChangeWidth',  movieCount, sessionStorageQuery);
+    if (sessionStorageQuery !== null  && sessionStorageQuery !== "") {
+      setQuery(sessionStorageQuery);
+      const cardsFiltredQueryLocal = JSON.parse(localStorage.getItem("query_movie"));
       setCardsFiltredQuery(cardsFiltredQueryLocal.splice(0,movieCount));
+      console.log('handleChangeWidth1',cardsFiltredQueryLocal);
     }
   }
 
@@ -40,9 +43,7 @@ function SearchForm(props) {
     const cardsFiltredQueryLocal = JSON.parse(localStorage.getItem('query_movie'));
     setCardsFiltredQuery(cardsFiltredQueryLocal.splice(0, movieCountMore));
     setMovieCount(movieCountMore);
-    
     console.log('bbb', props.windowSize, movieCount,  movieCountMore, cardsFiltredQueryLocal.splice(0,movieCount));
-    
   }
 
 
@@ -53,12 +54,10 @@ function SearchForm(props) {
   }
 
   
-
+  // Обработчик поиска
   const handleSearchQuery = (evn) => {
     evn.preventDefault();
-    //setMovieCount(props.movieCount);
-    localStorage.setItem('query', query);
-    //const cardsFiltred = cardsData.filter(card => card.nameRU.includes(query));
+    localStorage.setItem('sessionStorageQuery', query);
     const cardsFiltred = cardsData.filter(card => card.nameRU.includes(query));
     localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
     setCardsFiltredQuery(cardsFiltred.splice(0,movieCount));
@@ -80,12 +79,12 @@ function SearchForm(props) {
       { (cardsFiltredQuery.length === 0) &&
         <p className="searchForm__message-nothing">Ничего не найдено</p>
       }
-      { (query !== '' && cardsFiltredQuery.length !== 0) &&
+      { ((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length !== 0) &&
         <section className="moviesList">
           <MoviesCardList cardButtonClassName={'moviesCard__heart-button'} cards={cardsFiltredQuery}></MoviesCardList>
         </section>
       }
-      {(query !== '' && cardsFiltredQuery.length === movieCount && cardsFiltredQuery.length > 3) &&
+      {(query !== "" && cardsFiltredQuery.length === movieCount && cardsFiltredQuery.length > 3) &&
         <ButtonMore onClick={handleRander}/>
       }
     </main>
