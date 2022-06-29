@@ -4,6 +4,7 @@ import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import ButtonMore from '../ButtonMore/ButtonMore';
 import Preloader from '../Preloader/Preloader'
+import { apiMain } from '../../utils/MainApi';
 
 function SearchForm(props) {
 
@@ -18,11 +19,11 @@ function SearchForm(props) {
   //const [cardsFiltredQueryRender, setCardsFiltredQueryRender] = useState([]);
   // Стейт, в котором содержится значение генерируемых карточек
   const [movieCount, setMovieCount] = useState(8);
-  // Стейт, в котром содержится флаг прелоадера
+  // Стейт, в котором содержится флаг прелоадера
   const [isPreloader, setIsPreloader] = useState(false);
-  // Стейт, в котром содержится сообщение об ошибке
+  // Стейт, в котором содержится сообщение об ошибке
   const [errorText, setErrorText] = useState("");
-  // Стейт, в котром содержится флаг переключателя короткометражек
+  // Стейт, в котором содержится флаг переключателя короткометражек
   const getStoredStateCheckBox = () => {
     // Извлечение из локального хранилища ранее введенного состояния для кнопки переключатель короткометражек
     const sessionIsCheckBox = localStorage.getItem("isCheckBox");
@@ -32,6 +33,9 @@ function SearchForm(props) {
   const [isCheckBox, setIsCheckBox] = useState(getStoredStateCheckBox);
   // Извлечение из локального хранилища ранее введенного запроса
   const sessionStorageQuery = localStorage.getItem("sessionStorageQuery");
+    // Стейт, в котором содержится класс кнопки лайка карточки
+    const [cardButtonLikeClassName, setCardButtonLikeClassName] = useState("");
+
   
 
   // Создаём переменную, которую после зададим в `className` для кнопки переключатель короткометражек
@@ -122,6 +126,41 @@ function SearchForm(props) {
   }
 
 
+  // Обработчик постановки/снятия лайков
+  function handleCardLike(card, currentUser, setCurrentCards) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i === currentUser._id); // i._id
+    // Отправляем запрос в API 
+    if (isLiked) {
+      //если лайкнули карточку, то добавляем ее в список сохраненных фильмов через apiMain
+      apiMain.postCard(card)
+      .then((newCard) => {
+        setCurrentCards((cardsData) => cardsData.map((c) => c._id === card._id ? newCard.data : c));
+        // делаем класс кнопки активным
+        setCardButtonLikeClassName('moviesCard__heart-button-active');
+      })
+      .catch((err) => {
+        console.log(err);
+        return [];
+      });
+    } else {
+      //если дизлайк карточки, то удаляем ее из списка сохраненных фильмов через apiMain
+      apiMain.deleteCard(card._id)
+      .then((newCard) => {
+        setCurrentCards((cardsData) => cardsData.map((c) => c._id === card._id ? newCard.data : c));
+        // делаем класс кнопки неактивным
+        setCardButtonLikeClassName('moviesCard__heart-button-disactive');
+      })
+      .catch((err) => {
+        console.log(err);
+        return [];
+      });
+    }
+
+    
+  }
+
+
   return (
     <main className="searchForm">
       <form className="searchForm__nav">
@@ -140,7 +179,7 @@ function SearchForm(props) {
       }
       { ((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length !== 0) &&
         <section className="moviesList">
-          <MoviesCardList cardButtonClassName={'moviesCard__heart-button'} cards={cardsFiltredQuery}></MoviesCardList>
+          <MoviesCardList cardButtonClassName={'moviesCard__heart-button'} cards={cardsFiltredQuery} onClick={handleCardLike}></MoviesCardList>
         </section>
       }
       {((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length === movieCount && cardsFiltredQuery.length > 3) &&

@@ -7,7 +7,7 @@ function MoviesCard(props) {
       <div className="moviesCard__title-block">
         <div className="moviesCard__likes">
           <p className="moviesCard__title">{props.card.nameRU}</p>
-          <button className={props.cardButtonClassName} type="button" ></button>
+          <button className={props.cardButtonClassName} type="button" onClick={props.onClick}></button>
         </div>
         <p className="moviesCard__subtitle">{props.card.duration}</p>
       </div>

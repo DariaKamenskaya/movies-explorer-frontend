@@ -3,11 +3,15 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 
 function MoviesCardList(props) {
 
+  function handleClick()  {
+    props.onClick(props.card);
+  }
+
  // const movieCount = props.movieCount;
   const cards = props.cards;
   console.log('CardList', cards)
     const listCards = cards.map((card) =>
-      <MoviesCard card={card} key={card.id} cardButtonClassName={props.cardButtonClassName}/>
+      <MoviesCard card={card} key={card.id} cardButtonClassName={props.cardButtonClassName} onClick={handleClick}/>
     );
   return (
     <div className="moviesCardList">
