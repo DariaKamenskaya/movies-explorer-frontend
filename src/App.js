@@ -118,7 +118,13 @@ function App() {
 
 
 
-
+  const handleLogOut = () => {
+    setLoggedIn(false);
+    setCurrentUser([]);
+    setCards([]);
+    localStorage.clear();
+    navigate('/');
+  };
 
 
 
@@ -160,7 +166,7 @@ function App() {
           path="/"
           element={
             <div>
-              <Header/> 
+              {(!loggedIn) ? <Header/> : <HeaderMovies/> }
               <Promo/> 
               <NavTab/> 
               <AboutProject/>
@@ -202,7 +208,7 @@ function App() {
           path="/profile"
           element={
             <RequireAuth loggedIn={loggedIn}>
-              <Profile/>
+              <Profile handleResetData={handleLogOut}/>
             </RequireAuth>
           } 
         />

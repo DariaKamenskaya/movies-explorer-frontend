@@ -64,3 +64,23 @@ export const authorize = (email, password) => {
       return Promise.reject(`Что-то пошло не так: ${res.status}`);
     });
   };
+
+
+  // сохранение на сервере отредактированных данных пользователя
+  export const patchUserMe = ({name, email}) => {
+    return fetch(`${baseUrlApiMain}/users/me`, {
+      method: 'PATCH',
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}`, // this._token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({name, email})
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    // отклоняем промис, чтобы перейти в блок catch, если сервер вернул ошибку
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+    }); 
+  }
