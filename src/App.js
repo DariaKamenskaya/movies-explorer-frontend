@@ -34,6 +34,9 @@ function App() {
 
 
   const [cards, setCards] = useState([]);
+  // Стейт, в котором содержится значение инпута
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userEmail, setUserEmail] = useState('');
 
   const updateMovies = (cards) => {
     setCards(cards);
@@ -67,7 +70,10 @@ function App() {
   }, [windowSize]) */
 
 
-
+  const handleLogin = (email) => {
+    setLoggedIn(true);
+    setUserEmail(email);
+  };
 
 
 
@@ -152,11 +158,11 @@ function App() {
       />
       <Route
         path="/signin" 
-        element={<Login/>} 
+        element={<Login onLogin={handleLogin}/>} 
       />
       <Route
         path="/signup"
-        element={<Register/>}
+        element={<Register onLogin={handleLogin}/>}
       />
     </Routes>
   </div>

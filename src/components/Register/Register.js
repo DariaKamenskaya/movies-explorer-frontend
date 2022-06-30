@@ -3,7 +3,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import logoUser from '../../images/logo_user.svg'; 
 import * as auth from '../../utils/auth';
 
-function Register() {
+function Register({ onLogin }) {
 
   const [values, setValues] = useState({
     name: '',
@@ -49,7 +49,6 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values.name,values.email,values.password)
     auth
         .createUser(
           values.name,
@@ -58,10 +57,24 @@ function Register() {
         )
         .then((res) => {
           if(res.data){
-            console.log('Регистрация прошла успешно');
+            // содадим токен
+            auth
+            .authorize(values.email, values.password)
+            .then((res) => {
+              if (res.token) {
+                setValues({
+                  email: "",
+                  password: "",
+                })
+                localStorage.setItem('jwt', res.token);
+                onLogin(values.email);  // обновляем стейт внутри App.js
+              }
+            })
+            .catch((err) => console.log(err));
             navigate('/movies');
           } else {
-            console.log('Ой, что-то все упало');
+            setErrors({...errors,  'email': res.message });
+            setIsValid(false);
           }
         })
         .catch((err) => {

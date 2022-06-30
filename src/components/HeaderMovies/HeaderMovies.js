@@ -16,7 +16,7 @@ function HeaderMovies() {
             <Link to={'/saved-movies'} className={'header__link header__link_reg header__link_movies'}>{'Сохраненные фильмы'}</Link>
           </div>
           <button className="header__button header__button_icon">
-            <Link to={'/sign-in'} className={'header__link header__link_reg header__link_icon'}>{'Аккаунт'}</Link>
+            <Link to={'/profile'} className={'header__link header__link_reg header__link_icon'}>{'Аккаунт'}</Link>
             <img src={iconUser} alt="Иконка пользователя" className="header__icon"/>
           </button>
         </div>
