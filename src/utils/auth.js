@@ -46,5 +46,21 @@ export const authorize = (email, password) => {
     })
     .then(res => res.json())
     .then(data => data)
-  }
+  };
   
+
+  // метод инициализации данных пользователя
+  export const getUserData = () => {
+    return fetch(`${baseUrlApiMain}/users/me`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('jwt')}` // this._token
+      }
+    })
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      }
+    // отклоняем промис, чтобы перейти в блок catch, если сервер вернул ошибку
+      return Promise.reject(`Что-то пошло не так: ${res.status}`);
+    });
+  };

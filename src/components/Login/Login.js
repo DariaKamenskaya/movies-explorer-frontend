@@ -14,15 +14,16 @@ function Login({ onLogin }) {
 
   const navigate = useNavigate();
 
-    // Обработчик изменения инпута обновляет стейт
-    const handleChange = (e) => {
-      const { name, value } = e.target;
-      const target = e.target;
-      setValues((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-      setErrors({...errors, [name]: target.validationMessage });
+
+  // Обработчик изменения инпута обновляет стейт
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const target = e.target;
+    setValues((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    setErrors({...errors, [name]: target.validationMessage });
 /*       if (values['email'] === "") {
         setErrors({...errors, [name]: target.validationMessage, 'email': 'Это поле необходимо заполнить' });
       }
@@ -67,7 +68,8 @@ function Login({ onLogin }) {
             })
             localStorage.setItem('jwt', res.token);
             onLogin(values.email);  // обновляем стейт внутри App.js
-            navigate("/movies"); // и переадресуем пользователя! 
+            console.log('login submit');
+            navigate("/movies"); // и переадресуем пользователя!
           }
         })
        .catch((err) => {

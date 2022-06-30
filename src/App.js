@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // Импорт модулей
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import AboutMe from './components/AboutMe/AboutMe';
 import AboutProject from './components/AboutProject/AboutProject';
 import Footer from './components/Footer/Footer';
@@ -18,8 +18,10 @@ import Login from './components/Login/Login';
 import Register from './components/Register/Register';
 import  {apiBeatfilmMovies}  from './utils/MoviesApi';
 import {CurrentCardsContext}  from './contexts/CurrentCardsContext';
-
+import { CurrentUserContext } from './contexts/CurrentUserContext';
+import * as auth from './utils/auth';
 import useWindowDimensions  from './utils/windowsUpdate';
+import RequireAuth from './utils/RequireAuth';
 
 
 
@@ -34,9 +36,13 @@ function App() {
 
 
   const [cards, setCards] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
   // Стейт, в котором содержится значение инпута
   const [loggedIn, setLoggedIn] = useState(false);
-  const [userEmail, setUserEmail] = useState('');
+
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const updateMovies = (cards) => {
     setCards(cards);
@@ -44,6 +50,42 @@ function App() {
   }
 
   useEffect(() => {
+    // проверка токена 
+    handleTokenCheck(location.pathname);
+    // запрос в API за пользовательскими данными
+    if (loggedIn){
+      Promise.all([ 
+      auth.getUserData(),
+      apiBeatfilmMovies.getInitialMovies()
+      ])
+      .then((res) => {
+        console.log('useEffect' , loggedIn, res, location.pathname);
+        setCurrentUser(res[0].data);
+        updateMovies(res[1]); 
+      })
+      .catch((err) => {
+        console.log(err); // "Что-то пошло не так: ..."
+        return [];
+      })}
+  }, [loggedIn]);
+
+
+  const handleTokenCheck = (path) => {
+    if (localStorage.getItem("jwt")) {
+      const jwt = localStorage.getItem("jwt");
+      // проверяем токен пользователя
+      auth.checkToken(jwt).then((res) => {
+        if (res.data) {
+          // если есть цель, добавляем её в стейт
+          setLoggedIn(true);
+          navigate(path);
+        }
+      });
+    }
+  };
+
+
+/*   useEffect(() => {
     // const cards = JSON.parse(localStorage.getItem('all_movie' || '[]'));
     if (!cards.length) {
       // запрос в API за пользовательскими данными
@@ -58,7 +100,7 @@ function App() {
     } else {
       setCards(cards);
     }
-  }, []);
+  }, []); */
 
 /*   useEffect(() => {
     useWindowDimensions()
@@ -72,7 +114,6 @@ function App() {
 
   const handleLogin = (email) => {
     setLoggedIn(true);
-    setUserEmail(email);
   };
 
 
@@ -112,60 +153,70 @@ function App() {
 
 
   return (
-  <div className="page">
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <div>
-            <Header/> 
-            <Promo/> 
-            <NavTab/> 
-            <AboutProject/>
-            <Techs/>
-            <AboutMe/>
-            <Portfolio/>
-            <Footer/>
-          </div>
-        }
-      />
-      <Route
-        path="/movies"
-        element={
-          <div>
-            <CurrentCardsContext.Provider value={cards}>
-              <HeaderMovies/> 
-              <SearchForm  windowSize={windowSize} movieCount={movieCount} />
+  <CurrentUserContext.Provider value={currentUser}>
+    <div className="page">
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div>
+              <Header/> 
+              <Promo/> 
+              <NavTab/> 
+              <AboutProject/>
+              <Techs/>
+              <AboutMe/>
+              <Portfolio/>
               <Footer/>
-            </CurrentCardsContext.Provider>
-          </div>
-        }
-      />
-      <Route
-        path="/saved-movies"
-        element={
-          <div>
-            <HeaderMovies/> 
-            <SearchForm/> 
-            {/* <MoviesCardList cardButtonClassName={'moviesCard__close-button'}/> */}
-            <Footer/>
-          </div>
-        }
-      />
-      <Route
-        path="/profile"
-        element={<Profile/>} 
-      />
-      <Route
-        path="/signin" 
-        element={<Login onLogin={handleLogin}/>} 
-      />
-      <Route
-        path="/signup"
-        element={<Register onLogin={handleLogin}/>}
-      />
-    </Routes>
-  </div>
+            </div>
+          }
+        />
+        <Route
+          path="/movies"
+          element={
+            <RequireAuth loggedIn={loggedIn}>
+            <div>
+              <CurrentCardsContext.Provider value={cards}>
+                <HeaderMovies/> 
+                <SearchForm  windowSize={windowSize} movieCount={movieCount} />
+                <Footer/>
+              </CurrentCardsContext.Provider>
+            </div>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/saved-movies"
+          element={
+            <RequireAuth loggedIn={loggedIn}>
+            <div>
+              <HeaderMovies/> 
+              <SearchForm/> 
+              {/* <MoviesCardList cardButtonClassName={'moviesCard__close-button'}/> */}
+              <Footer/>
+            </div>
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <RequireAuth loggedIn={loggedIn}>
+              <Profile/>
+            </RequireAuth>
+          } 
+        />
+        <Route
+          path="/signin" 
+          element={<Login onLogin={handleLogin}/>} 
+        />
+        <Route
+          path="/signup"
+          element={<Register onLogin={handleLogin}/>}
+        />
+      </Routes>
+    </div>
+  </CurrentUserContext.Provider>
   );
 }
 
