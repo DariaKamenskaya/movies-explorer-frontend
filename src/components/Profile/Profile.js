@@ -10,13 +10,12 @@ function Profile(props) {
 
   // Подписываемся на контекст CurrentUserContext
   const userData = React.useContext(CurrentUserContext);
-  console.log(userData);
+
 
   const [values, setValues] = useState({
     name: '',
     email: ''
   });
-  console.log(values.name, values.email, userData.name);
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
@@ -40,7 +39,6 @@ function Profile(props) {
       setValues(newValues);
       setErrors(newErrors);
       setIsValid(newIsValid);
-      console.log('resetForm');
     },
     [setValues, setErrors, setIsValid]
   );
@@ -61,7 +59,6 @@ function Profile(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(values);
     auth
       .patchUserMe(
         values
@@ -69,9 +66,7 @@ function Profile(props) {
       .then((res) => {
         if(res.data){
           setIsOpenPopup(true);
-          console.log('profile success!')
         } else {
-          console.log(res);
           setErrors({...errors,  'email': res.message });
           setIsValid(false);
         }

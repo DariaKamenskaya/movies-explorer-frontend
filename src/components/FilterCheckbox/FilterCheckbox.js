@@ -2,7 +2,6 @@
 
 function FilterCheckbox(props) {
 
-  console.log('FilterCheckbox', props.classTumbler)
 
   return (
     <div className="filterCheckbox">

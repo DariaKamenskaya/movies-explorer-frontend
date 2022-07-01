@@ -1,5 +1,6 @@
 import {baseUrlApiMain} from "../utils/constant";
 
+
 // класс для работы с ApiMain
 class mainAPI {
 
@@ -33,8 +34,17 @@ class mainAPI {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: data.name,
-        link: data.link
+        country: (data.country === null) ? 'country' : data.country,
+        director: data.director,
+        duration: data.duration,
+        year: Number(data.year),
+        description: data.description,
+        image: `https://api.nomoreparties.co${data.image.url}`,
+        trailerLink: data.trailerLink,
+        nameRU: data.nameRU,
+        nameEN: (data.nameEN === '') ? 'data.nameEN' : data.nameEN,
+        thumbnail: `https://api.nomoreparties.co${data.image.formats.thumbnail.url}`,
+        movieId: data.id,
       })
     })
     .then((res) => {

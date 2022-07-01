@@ -5,11 +5,14 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import ButtonMore from '../ButtonMore/ButtonMore';
 import Preloader from '../Preloader/Preloader'
 import { apiMain } from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function SearchForm(props) {
 
   // Подписываемся на контекст CurrentCardsContext
   const cardsData = React.useContext(CurrentCardsContext);
+  // Подписываемся на контекст CurrentUserContext
+  const userData = React.useContext(CurrentUserContext);
 
   // Стейт, в котором содержится значение инпута
   const [query, setQuery] = useState("");
@@ -24,7 +27,7 @@ function SearchForm(props) {
   // Стейт, в котором содержится сообщение об ошибке
   const [errorText, setErrorText] = useState("");
   // Стейт, в котором содержится флаг переключателя короткометражек
-  const getStoredStateCheckBox = () => {
+  const getStoredStateCheckBox = (cardsData) => {
     // Извлечение из локального хранилища ранее введенного состояния для кнопки переключатель короткометражек
     const sessionIsCheckBox = localStorage.getItem("isCheckBox");
     const initialIsCheckBox = (sessionIsCheckBox !== null) ? JSON.parse(localStorage.getItem("isCheckBox")) : false;
@@ -33,8 +36,12 @@ function SearchForm(props) {
   const [isCheckBox, setIsCheckBox] = useState(getStoredStateCheckBox);
   // Извлечение из локального хранилища ранее введенного запроса
   const sessionStorageQuery = localStorage.getItem("sessionStorageQuery");
-    // Стейт, в котором содержится класс кнопки лайка карточки
-    const [cardButtonLikeClassName, setCardButtonLikeClassName] = useState("");
+  // Стейт, в котором содержится состояние лайка карточки
+  const [isLikedCard, setIsLikedCard] = useState({});
+  // Стейт, в котором содержатся сохраненные карточки
+  const [savedCards, setSavedCards] = useState([]);
+  // Стейт, в котором содержатся id сохраненной карточки
+  const [idSavedCards, setIdSavedCards] = useState([]);
 
   
 
@@ -47,21 +54,40 @@ function SearchForm(props) {
 
   useEffect(() => {
     handleChangeWidth();
-  }, [props.windowSize])
+  }, [props.windowSize, userData])
 
 
 
   const handleChangeWidth = () => {
     setMovieCount(props.movieCount);
-    console.log('handleChangeWidth',  movieCount, sessionStorageQuery, window.innerWidth);
-    if (sessionStorageQuery !== null  && sessionStorageQuery !== "") {
-      setQuery(sessionStorageQuery);
-      const cardsFiltredQueryLocal = JSON.parse(localStorage.getItem("query_movie"));
-      setCardsFiltredQuery(cardsFiltredQueryLocal.splice(0,movieCount));
-      console.log('handleChangeWidth1',cardsFiltredQueryLocal);
+    // получаем сохраненные карточки с нашего API
+    if (userData.name !== undefined ) {
+      apiMain.getInitialCards()
+      .then((data) => {
+        const savedMovie = data.filter((card) => card.owner === userData._id);
+        const savedMovieId = savedMovie.map((card) => card.movieId);
+        // добавляем карточку в список сохраненных фильмов пользователя
+        setSavedCards(savedMovie);
+        // добавляем id карточки в список id сохраненных фильмов
+        setIdSavedCards(savedMovieId);
+        localStorage.setItem('saved_movie', JSON.stringify(data));
+        const savedMovieLiked = {};
+        savedMovieId.forEach((id) => {
+          savedMovieLiked[String(id)] = true;
+        })
+        // присваиваем карточке id статус лайк
+        setIsLikedCard(savedMovieLiked);
+      })
+      .catch((err) => {
+        console.log(err);
+        return [];
+      });
+      if (sessionStorageQuery !== null  && sessionStorageQuery !== "") {
+        setQuery(sessionStorageQuery);
+        const cardsFiltredQueryLocal = JSON.parse(localStorage.getItem("query_movie"));
+        setCardsFiltredQuery(cardsFiltredQueryLocal.splice(0,movieCount));
+      }
     }
-    //if (sessionIsCheckBox !== null) setIsCheckBox(JSON.parse(localStorage.getItem("isCheckBox")));
-    console.log('isCheckBox', isCheckBox);
   }
 
   const handleRander = (e) => {
@@ -70,7 +96,6 @@ function SearchForm(props) {
     const cardsFiltredQueryLocal = JSON.parse(localStorage.getItem('query_movie'));
     setCardsFiltredQuery(cardsFiltredQueryLocal.splice(0, movieCountMore));
     setMovieCount(movieCountMore);
-    console.log('bbb', props.windowSize, movieCount,  movieCountMore, cardsFiltredQueryLocal.splice(0,movieCount));
   }
 
 
@@ -97,9 +122,6 @@ function SearchForm(props) {
         setCardsFiltredQuery(cardsFiltred.splice(0,movieCount));
       }
       setIsPreloader(false);
-      //const cardsFiltredQueryLocal = cardsFiltred.splice(0,movieCount);
-      //setCardsFiltredQueryRender(cardsFiltredQueryLocal);
-      console.log('handleSearchQuery', props.windowSize, movieCount, cardsFiltred);
     };
   };
 
@@ -125,39 +147,56 @@ function SearchForm(props) {
     setCardsFiltredQuery(cardsFiltred.splice(0,movieCount));
   }
 
+  // функция удаления элемента из массива
+  function removeItemOnce(arr, value) {
+    const index = arr.indexOf(value);
+    if (index > -1) {
+      arr.splice(index, 1);
+    }
+    return arr;
+  }
+
 
   // Обработчик постановки/снятия лайков
-  function handleCardLike(card, currentUser, setCurrentCards) {
-    // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i === currentUser._id); // i._id
-    // Отправляем запрос в API 
-    if (isLiked) {
-      //если лайкнули карточку, то добавляем ее в список сохраненных фильмов через apiMain
+  function handleCardLike(card) {
+    // ищем сначала сохранил ли пользователь карточку
+    //console.log('handleCardLike1', idSavedCards, isLikedCard);
+    const isSavedCard = idSavedCards.some(item => item === card.id);
+    //console.log('handleCardLike2', isSavedCard, isLikedCard); 
+    if (!isSavedCard) {
+      //если пользователь не сохранял карточку, то добавляем ее в список сохраненных фильмов через apiMain
+      // и ставим ей лайк, добавив ее в массив id сохраненных фильмов
       apiMain.postCard(card)
-      .then((newCard) => {
-        setCurrentCards((cardsData) => cardsData.map((c) => c._id === card._id ? newCard.data : c));
-        // делаем класс кнопки активным
-        setCardButtonLikeClassName('moviesCard__heart-button-active');
-      })
-      .catch((err) => {
-        console.log(err);
-        return [];
-      });
+        .then((newCard) => {
+          // добавляем карточку в список сохраненных фильмов
+          setSavedCards([newCard.data, ...savedCards]);
+          // добавляем id карточки в список id сохраненных фильмов
+          setIdSavedCards([card.id, ...idSavedCards]);
+          // присваиваем ее id статус лайк
+          setIsLikedCard({...isLikedCard, [String(card.id)]: true});
+        })
+        .catch((err) => {
+          console.log(err);
+          return [];
+        });
     } else {
-      //если дизлайк карточки, то удаляем ее из списка сохраненных фильмов через apiMain
-      apiMain.deleteCard(card._id)
-      .then((newCard) => {
-        setCurrentCards((cardsData) => cardsData.map((c) => c._id === card._id ? newCard.data : c));
-        // делаем класс кнопки неактивным
-        setCardButtonLikeClassName('moviesCard__heart-button-disactive');
-      })
-      .catch((err) => {
-        console.log(err);
-        return [];
-      });
+      //если пользователь сохранял карточку, значит дизлайк карточки
+      // тогда присваиваем ее id статус дизлайк
+      setIsLikedCard({...isLikedCard, [String(card.id)]: false});
+      // удаляем id карточки из списка id сохраненных фильмов
+      setIdSavedCards(removeItemOnce(idSavedCards, card.id));
+      const findSavedCard = savedCards.find(item => item.movieId === card.id);
+      // удаляем карточку из списка сохраненных фильмов через apiMain
+      apiMain.deleteCard(findSavedCard._id)
+        .then((data) => {
+        })
+        .catch((err) => {
+          console.log(err);
+          return [];
+        });
+      // удаляем карточку из спискa сохраненных фильмов
+      setSavedCards(removeItemOnce(savedCards, card.id));
     }
-
-    
   }
 
 
@@ -179,7 +218,10 @@ function SearchForm(props) {
       }
       { ((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length !== 0) &&
         <section className="moviesList">
-          <MoviesCardList cardButtonClassName={'moviesCard__heart-button'} cards={cardsFiltredQuery} onClick={handleCardLike}></MoviesCardList>
+          <MoviesCardList isLikedCard={isLikedCard}
+                          cards={cardsFiltredQuery}
+                          onClickLike={handleCardLike}
+          ></MoviesCardList>
         </section>
       }
       {((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length === movieCount && cardsFiltredQuery.length > 3) &&

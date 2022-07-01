@@ -68,7 +68,6 @@ function Login({ onLogin }) {
             })
             localStorage.setItem('jwt', res.token);
             onLogin(values.email);  // обновляем стейт внутри App.js
-            console.log('login submit');
             navigate("/movies"); // и переадресуем пользователя!
           }
         })

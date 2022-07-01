@@ -21,6 +21,7 @@
     border-bottom: 1px solid #424242;
     padding-bottom: 20px;
     padding-top: 15px;
+    min-height: 22px;
 }
 
 .moviesCard__image {
@@ -66,7 +67,7 @@
     color: #8B8B8B;
 }
 
-.moviesCard__heart-button {
+.moviesCard__heart-button-disactive {
     margin: 0;
     border: none;
     cursor: pointer;
@@ -79,7 +80,11 @@
     height: 24px;
 }
 
-.moviesCard__heart-button:hover {
+.moviesCard__heart-button-disactive:hover {
+    opacity: .5;
+}
+
+.moviesCard__heart-button-active:hover {
     opacity: .5;
 }
 
@@ -92,7 +97,7 @@
     opacity: 1.0;
     background-position: center center;
     background-repeat: no-repeat;
-    width: 24px;
+    width: 30px;
     background-size: 22px;
 }
 
