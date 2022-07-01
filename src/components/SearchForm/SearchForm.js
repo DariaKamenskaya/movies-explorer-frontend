@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import {CurrentCardsContext}  from '../../contexts/CurrentCardsContext';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
@@ -18,8 +19,6 @@ function SearchForm(props) {
   const [query, setQuery] = useState("");
   // Стейт, в котором содержатся отфильтрованные карточки
   const [cardsFiltredQuery, setCardsFiltredQuery] = useState([]);
-  // Стейт, в котором содержатся отфильтрованные карточки для вывода на экран
-  //const [cardsFiltredQueryRender, setCardsFiltredQueryRender] = useState([]);
   // Стейт, в котором содержится значение генерируемых карточек
   const [movieCount, setMovieCount] = useState(8);
   // Стейт, в котором содержится флаг прелоадера
@@ -43,7 +42,7 @@ function SearchForm(props) {
   // Стейт, в котором содержатся id сохраненной карточки
   const [idSavedCards, setIdSavedCards] = useState([]);
 
-  
+  const location = useLocation();
 
   // Создаём переменную, которую после зададим в `className` для кнопки переключатель короткометражек
   const checkBoxButtonClassName = (
@@ -70,7 +69,7 @@ function SearchForm(props) {
         setSavedCards(savedMovie);
         // добавляем id карточки в список id сохраненных фильмов
         setIdSavedCards(savedMovieId);
-        localStorage.setItem('saved_movie', JSON.stringify(data));
+        localStorage.setItem('saved_movie', JSON.stringify(savedMovie));
         const savedMovieLiked = {};
         savedMovieId.forEach((id) => {
           savedMovieLiked[String(id)] = true;
@@ -200,6 +199,26 @@ function SearchForm(props) {
   }
 
 
+  // Обработчик постановки/снятия лайков
+  function handleCardDelete(card) {
+    //если пользователь сохранял карточку, значит дизлайк карточки
+    // тогда присваиваем ее id статус дизлайк
+    setIsLikedCard({...isLikedCard, [String(card.movieId)]: false});
+    // удаляем id карточки из списка id сохраненных фильмов
+    setIdSavedCards(removeItemOnce(idSavedCards, card.movieId));
+    // удаляем карточку из списка сохраненных фильмов через apiMain
+    apiMain.deleteCard(card._id)
+      .then((data) => {
+      })
+      .catch((err) => {
+        console.log(err);
+        return [];
+      });
+    // удаляем карточку из спискa сохраненных фильмов
+    setSavedCards(removeItemOnce(savedCards, card));
+  }
+
+
   return (
     <main className="searchForm">
       <form className="searchForm__nav">
@@ -216,7 +235,7 @@ function SearchForm(props) {
       { (isPreloader) &&
           <Preloader />
       }
-      { ((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length !== 0) &&
+      { ((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length !== 0  && (location.pathname === '/movies')) &&
         <section className="moviesList">
           <MoviesCardList isLikedCard={isLikedCard}
                           cards={cardsFiltredQuery}
@@ -224,7 +243,15 @@ function SearchForm(props) {
           ></MoviesCardList>
         </section>
       }
-      {((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length === movieCount && cardsFiltredQuery.length > 3) &&
+      {  (location.pathname === '/saved-movies') &&
+        <section className="moviesList">
+          <MoviesCardList isLikedCard={isLikedCard}
+                          cards={savedCards}
+                          onClickLike={handleCardDelete}
+          ></MoviesCardList>
+        </section>
+      }
+      {((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length === movieCount && cardsFiltredQuery.length > 3 && (location.pathname === '/movies')) &&
         <ButtonMore onClick={handleRander}/>
       }
     </main>

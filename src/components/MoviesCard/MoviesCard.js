@@ -13,11 +13,20 @@ function MoviesCard(props) {
     props.onClickLike(props.card, isSaved);
   }
 
-  //console.log(props.card.nameRU, props.isSaved);
+
 
   return(
     <article className="moviesCard">
-      <img src={`https://api.nomoreparties.co${props.card.image.url}`} alt={'Постер'} className="moviesCard__image"  />
+      {(location.pathname === '/movies') &&
+        <img src={`https://api.nomoreparties.co${props.card.image.url}`}
+        alt={'Постер'}
+        className="moviesCard__image"  />
+      }
+      {(location.pathname === '/saved-movies') &&
+        <img src={props.card.image}
+        alt={'Постер'}
+        className="moviesCard__image"  />
+      }
       <div className="moviesCard__title-block">
         <div className="moviesCard__likes">
           <p className="moviesCard__title">{props.card.nameRU}</p>
@@ -28,7 +37,7 @@ function MoviesCard(props) {
             </button>
           }
           { (location.pathname === '/saved-movies') &&
-            <button className={ `${props.card.isSaved ?  'moviesCard__heart-button-active' :  'moviesCard__heart-button-disactive'}`}
+            <button className={ `${props.isSaved ?  'moviesCard__close-button' :  ''}`}
                     type="button"
                     onClick={handleLikeClick}>
             </button>

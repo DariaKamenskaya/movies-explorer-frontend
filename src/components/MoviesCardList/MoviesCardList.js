@@ -1,19 +1,20 @@
 //import React from 'react'; 
+import { useLocation } from 'react-router-dom';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
 function MoviesCardList(props) {
 
-/*   function handleClick()  {
-    props.onClick(props.card);
-    console.log(props.card);
-  } */
+  const location = useLocation();
 
  // const movieCount = props.movieCount;
   const cards = props.cards;
   const isLikedCard = props.isLikedCard;
 
     const listCards = cards.map((card) =>
-      <MoviesCard card={card} key={card.id} isSaved={isLikedCard[card.id]} onClickLike={props.onClickLike} />
+      <MoviesCard card={card}
+                  key={(location.pathname === '/movies') ? card.id : card.movieId}
+                  isSaved={(location.pathname === '/movies') ? isLikedCard[card.id] : isLikedCard[card.movieId]}
+                  onClickLike={props.onClickLike} />
     );
   return (
     <div className="moviesCardList">

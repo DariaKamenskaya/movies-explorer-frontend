@@ -198,7 +198,6 @@ function App() {
             <div>
               <HeaderMovies/> 
               <SearchForm/> 
-              {/* <MoviesCardList cardButtonClassName={'moviesCard__close-button'}/> */}
               <Footer/>
             </div>
             </RequireAuth>
