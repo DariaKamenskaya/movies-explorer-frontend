@@ -15,10 +15,14 @@ function SearchForm(props) {
   // Подписываемся на контекст CurrentUserContext
   const userData = React.useContext(CurrentUserContext);
 
-  // Стейт, в котором содержится значение инпута
+  // Стейт, в котором содержится значение инпута для '/movies'
   const [query, setQuery] = useState("");
+  // Стейт, в котором содержится значение инпута для '/saved-movies'
+  const [querySavedMovie, setQuerySavedMovie] = useState("");
   // Стейт, в котором содержатся отфильтрованные карточки
   const [cardsFiltredQuery, setCardsFiltredQuery] = useState([]);
+  // Стейт, в котором содержатся отфильтрованные сохраненные карточки
+  const [cardsSavedFiltredQuery, setCardsSavedFiltredQuery] = useState([]);
   // Стейт, в котором содержится значение генерируемых карточек
   const [movieCount, setMovieCount] = useState(8);
   // Стейт, в котором содержится флаг прелоадера
@@ -56,7 +60,6 @@ function SearchForm(props) {
   }, [props.windowSize, userData])
 
 
-
   const handleChangeWidth = () => {
     setMovieCount(props.movieCount);
     // получаем сохраненные карточки с нашего API
@@ -82,7 +85,7 @@ function SearchForm(props) {
         return [];
       });
       if (sessionStorageQuery !== null  && sessionStorageQuery !== "") {
-        setQuery(sessionStorageQuery);
+        (location.pathname === '/movies') ? setQuery(sessionStorageQuery) : setQuerySavedMovie('');
         const cardsFiltredQueryLocal = JSON.parse(localStorage.getItem("query_movie"));
         setCardsFiltredQuery(cardsFiltredQueryLocal.splice(0,movieCount));
       }
@@ -101,24 +104,29 @@ function SearchForm(props) {
   // Обработчик изменения инпута обновляет стейт
   const handleChangeQuery = (e) => {
     e.preventDefault();
-    setQuery(e.target.value);
+    (location.pathname === '/movies') ? setQuery(e.target.value) : setQuerySavedMovie(e.target.value);
   }
 
   
   // Обработчик поиска
   const handleSearchQuery = (evn) => {
     evn.preventDefault();
-    localStorage.setItem('sessionStorageQuery', query);
-    if (query === "") {
+    if (location.pathname === '/movies')  localStorage.setItem('sessionStorageQuery', query);
+    let querySearch = '';
+    (location.pathname === '/movies') ? querySearch = query : querySearch = querySavedMovie;
+    if (querySearch === "") {
       setErrorText('Нужно ввести ключевое слово'); 
     } else {
       setIsPreloader(true);
-      const cardsFiltred = cardsData.filter(card => card.nameRU.includes(query));
+      let cardForSearch = [];
+      (location.pathname === '/movies') ? cardForSearch = cardsData : cardForSearch = savedCards;
+      const cardsFiltred = cardForSearch.filter(card => card.nameRU.includes(querySearch));
+      //console.log(querySearch, cardForSearch,cardsFiltred, location.pathname);
       if (isCheckBox) {
         handleSearchCheckBox(cardsFiltred);
       } else {
-        localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
-        setCardsFiltredQuery(cardsFiltred.splice(0,movieCount));
+        if  (location.pathname === '/movies') localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
+        (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery(cardsFiltred.splice(0,50));
       }
       setIsPreloader(false);
     };
@@ -132,9 +140,11 @@ function SearchForm(props) {
     if (!isCheckBox) {
       (cardsFiltredQuery.length !== 0)  ?  handleSearchCheckBox(JSON.parse(localStorage.getItem("query_movie"))) :  handleSearchCheckBox(cardsData);
     }  else {
-      const cardsFiltred = cardsData.filter(card => card.nameRU.includes(query));
-      localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
-      setCardsFiltredQuery(cardsFiltred.splice(0,movieCount));
+      let cardForSearch = [];
+      (location.pathname === '/movies') ? cardForSearch = cardsData : cardForSearch = savedCards;
+      const cardsFiltred = cardForSearch.filter(card => card.nameRU.includes(query));
+      if (location.pathname === '/movies') localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
+      (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery(cardsFiltred.splice(0,50));
     }
   }
 
@@ -142,8 +152,8 @@ function SearchForm(props) {
   // Обработчик переключателя короткометражек
   const handleSearchCheckBox = (cards) => {
     const cardsFiltred = cards.filter(card => card.duration < 40);
-    localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
-    setCardsFiltredQuery(cardsFiltred.splice(0,movieCount));
+    if  (location.pathname === '/movies') localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
+    (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery(cardsFiltred.splice(0,50));
   }
 
   // функция удаления элемента из массива
@@ -194,7 +204,7 @@ function SearchForm(props) {
           return [];
         });
       // удаляем карточку из спискa сохраненных фильмов
-      setSavedCards(removeItemOnce(savedCards, card.id));
+      setSavedCards(removeItemOnce(savedCards, card));
     }
   }
 
@@ -202,20 +212,23 @@ function SearchForm(props) {
   // Обработчик постановки/снятия лайков
   function handleCardDelete(card) {
     //если пользователь сохранял карточку, значит дизлайк карточки
-    // тогда присваиваем ее id статус дизлайк
-    setIsLikedCard({...isLikedCard, [String(card.movieId)]: false});
-    // удаляем id карточки из списка id сохраненных фильмов
-    setIdSavedCards(removeItemOnce(idSavedCards, card.movieId));
     // удаляем карточку из списка сохраненных фильмов через apiMain
     apiMain.deleteCard(card._id)
       .then((data) => {
+        // удаляем карточку из спискa сохраненных фильмов
+        setSavedCards(removeItemOnce(savedCards, card));
+        const newArray = removeItemOnce(cardsSavedFiltredQuery, card);
+        setCardsSavedFiltredQuery(newArray);  //if (querySavedMovie !== "")
+        console.log(removeItemOnce(cardsSavedFiltredQuery, card));
       })
       .catch((err) => {
         console.log(err);
         return [];
       });
-    // удаляем карточку из спискa сохраненных фильмов
-    setSavedCards(removeItemOnce(savedCards, card));
+    // присваиваем ее id статус дизлайк
+    setIsLikedCard({...isLikedCard, [String(card.movieId)]: false});
+    // удаляем id карточки из списка id сохраненных фильмов
+    setIdSavedCards(removeItemOnce(idSavedCards, card.movieId));
   }
 
 
@@ -224,12 +237,12 @@ function SearchForm(props) {
       <form className="searchForm__nav">
         <button type="button" className="searchForm__button-search searchForm__icon-search" ></button>
         <input required minLength="1" maxLength="30" id="name" name="name" type="text" placeholder="Фильм" className="searchForm__input-text"
-          onChange={handleChangeQuery} value={query}/>
+          onChange={handleChangeQuery} value={(location.pathname === '/movies') ? query : querySavedMovie}/>
         <button type="button" className="searchForm__button-submit"  onClick={handleSearchQuery}></button>
       </form>
       <span id="search-input-error" className="searchForm__input-error">{errorText}</span>
       <FilterCheckbox classTumbler={checkBoxButtonClassName} onClick={handleCheckBoxButton}/>
-      { (cardsFiltredQuery.length === 0 || query === "") &&
+      { (((cardsFiltredQuery.length === 0 || query === "")  && location.pathname === '/movies')  || (cardsSavedFiltredQuery.lenght === 0  && querySavedMovie !== '')) &&
         <p className="searchForm__message-nothing">Ничего не найдено</p>
       }
       { (isPreloader) &&
@@ -246,7 +259,7 @@ function SearchForm(props) {
       {  (location.pathname === '/saved-movies') &&
         <section className="moviesList">
           <MoviesCardList isLikedCard={isLikedCard}
-                          cards={savedCards}
+                          cards={(querySavedMovie === '') ? savedCards : cardsSavedFiltredQuery}
                           onClickLike={handleCardDelete}
           ></MoviesCardList>
         </section>

@@ -59,7 +59,7 @@ function App() {
       apiBeatfilmMovies.getInitialMovies()
       ])
       .then((res) => {
-        console.log('useEffect' , loggedIn, res, location.pathname);
+        //console.log('useEffect' , loggedIn, res, location.pathname);
         setCurrentUser(res[0].data);
         updateMovies(res[1]); 
       })

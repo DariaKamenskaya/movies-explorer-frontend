@@ -9,11 +9,11 @@ function MoviesCardList(props) {
  // const movieCount = props.movieCount;
   const cards = props.cards;
   const isLikedCard = props.isLikedCard;
-
+  console.log(cards);
     const listCards = cards.map((card) =>
       <MoviesCard card={card}
                   key={(location.pathname === '/movies') ? card.id : card.movieId}
-                  isSaved={(location.pathname === '/movies') ? isLikedCard[card.id] : isLikedCard[card.movieId]}
+                  isSaved={(location.pathname === '/movies') ? isLikedCard[card.id] : true}
                   onClickLike={props.onClickLike} />
     );
   return (
