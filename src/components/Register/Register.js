@@ -76,10 +76,11 @@ function Register({ onLogin }) {
                 })
                 localStorage.setItem('jwt', res.token);
                 onLogin(values.email);  // обновляем стейт внутри App.js
+                navigate('/movies');
               }
             })
             .catch((err) => console.log(err));
-            navigate('/movies');
+            //navigate('/movies');
           } else {
             setErrors({...errors,  'email': res.message });
             setIsValid(true);
