@@ -60,6 +60,8 @@ function SearchForm(props) {
   }, [props.windowSize, userData])
 
 
+
+
   const handleChangeWidth = () => {
     setMovieCount(props.movieCount);
     // получаем сохраненные карточки с нашего API
@@ -70,6 +72,7 @@ function SearchForm(props) {
         const savedMovieId = savedMovie.map((card) => card.movieId);
         // добавляем карточку в список сохраненных фильмов пользователя
         setSavedCards(savedMovie);
+        setCardsSavedFiltredQuery(savedMovie);
         // добавляем id карточки в список id сохраненных фильмов
         setIdSavedCards(savedMovieId);
         localStorage.setItem('saved_movie', JSON.stringify(savedMovie));
@@ -110,25 +113,32 @@ function SearchForm(props) {
   
   // Обработчик поиска
   const handleSearchQuery = (evn) => {
+    setErrorText(''); 
     evn.preventDefault();
     if (location.pathname === '/movies')  localStorage.setItem('sessionStorageQuery', query);
     let querySearch = '';
     (location.pathname === '/movies') ? querySearch = query : querySearch = querySavedMovie;
+    console.log('nothing search 0', cardsSavedFiltredQuery);
     if (querySearch === "") {
-      setErrorText('Нужно ввести ключевое слово'); 
+      setErrorText('Нужно ввести ключевое слово');
+      setCardsSavedFiltredQuery(...[]);
+      console.log('nothing search 2', cardsSavedFiltredQuery);
     } else {
       setIsPreloader(true);
       let cardForSearch = [];
       (location.pathname === '/movies') ? cardForSearch = cardsData : cardForSearch = savedCards;
       const cardsFiltred = cardForSearch.filter(card => card.nameRU.includes(querySearch));
       //console.log(querySearch, cardForSearch,cardsFiltred, location.pathname);
+      console.log('nothing search isCheckBox', isCheckBox);
       if (isCheckBox) {
         handleSearchCheckBox(cardsFiltred);
       } else {
         if  (location.pathname === '/movies') localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
-        (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery(cardsFiltred.splice(0,50));
+        (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery([...cardsFiltred.splice(0,50)]);
+        console.log('nothing search', cardsFiltred.splice(0,50));
       }
       setIsPreloader(false);
+      console.log('nothing search 1', cardsSavedFiltredQuery);
     };
   };
 
@@ -213,7 +223,6 @@ function SearchForm(props) {
   function handleCardDelete(card) {
     //если пользователь сохранял карточку, значит дизлайк карточки
     // удаляем карточку из списка сохраненных фильмов через apiMain
-    console.log(card);
     apiMain.deleteCard(card._id)
       .then((data) => {
         // удаляем карточку из спискa сохраненных фильмов
@@ -221,7 +230,6 @@ function SearchForm(props) {
         setSavedCards(newSavedCards);
         const newCardsSavedFiltredQuery = cardsSavedFiltredQuery.filter((item) => item._id !== card._id);
         setCardsSavedFiltredQuery(newCardsSavedFiltredQuery);  //if (querySavedMovie !== "")
-        console.log(newCardsSavedFiltredQuery);
       })
       .catch((err) => {
         console.log(err);
@@ -244,7 +252,10 @@ function SearchForm(props) {
       </form>
       <span id="search-input-error" className="searchForm__input-error">{errorText}</span>
       <FilterCheckbox classTumbler={checkBoxButtonClassName} onClick={handleCheckBoxButton}/>
-      { (((cardsFiltredQuery.length === 0 || query === "")  && location.pathname === '/movies')  || (cardsSavedFiltredQuery.lenght === 0  && querySavedMovie !== '')) &&
+      { (((cardsFiltredQuery.length === 0 || query === "")  && location.pathname === '/movies')) &&
+        <p className="searchForm__message-nothing">Ничего не найдено</p>
+      }
+      { ((!cardsSavedFiltredQuery.lenght  && location.pathname === '/saved-movies')) &&
         <p className="searchForm__message-nothing">Ничего не найдено</p>
       }
       { (isPreloader) &&
