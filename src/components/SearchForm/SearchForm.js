@@ -37,6 +37,15 @@ function SearchForm(props) {
     return initialIsCheckBox;
   };
   const [isCheckBox, setIsCheckBox] = useState(getStoredStateCheckBox);
+  // Стейт, в котором содержится флаг переключателя короткометражек для страницы сохраненные фильмы
+  const getStoredStateSavedMovieCheckBox = () => {
+    // Извлечение из локального хранилища ранее введенного состояния для кнопки переключатель короткометражек
+    const sessionIsCheckBox = localStorage.getItem("isSavedMovieCheckBox");
+    console.log('sessionIsCheckBox', sessionIsCheckBox);
+    const initialIsCheckBox = (sessionIsCheckBox !== null) ? JSON.parse(localStorage.getItem("isSavedMovieCheckBox")) : false;
+    return initialIsCheckBox;
+  };
+  const [isSavedMovieCheckBox, setIsCSavedMovieCheckBox] = useState(getStoredStateSavedMovieCheckBox);
   // Извлечение из локального хранилища ранее введенного запроса
   const sessionStorageQuery = localStorage.getItem("sessionStorageQuery");
   // Стейт, в котором содержится состояние лайка карточки
@@ -51,6 +60,10 @@ function SearchForm(props) {
   // Создаём переменную, которую после зададим в `className` для кнопки переключатель короткометражек
   const checkBoxButtonClassName = (
     `${isCheckBox ?  'filterCheckbox__tumbler-active' :  'filterCheckbox__tumbler-disactive'}`
+  );
+  // Создаём переменную, которую после зададим в `className` для кнопки переключатель короткометражек для страницы сохраненные фильмв
+  const checkBoxButtonClassNameSavedMovie = (
+    `${isSavedMovieCheckBox ?  'filterCheckbox__tumbler-active' :  'filterCheckbox__tumbler-disactive'}`
   );
 
 
@@ -119,6 +132,8 @@ function SearchForm(props) {
     let querySearch = '';
     (location.pathname === '/movies') ? querySearch = query : querySearch = querySavedMovie;
     console.log('nothing search 0', cardsSavedFiltredQuery);
+    let isCheckBoxLocal = false;
+    (location.pathname === '/movies') ? isCheckBoxLocal = isCheckBox : isCheckBoxLocal = isSavedMovieCheckBox;
     if (querySearch === "") {
       setErrorText('Нужно ввести ключевое слово');
       setCardsSavedFiltredQuery([...[]]);
@@ -130,10 +145,10 @@ function SearchForm(props) {
       const cardsFiltred = cardForSearch.filter(card => card.nameRU.toLowerCase().includes(querySearch.toLowerCase()));
       //console.log(querySearch, cardForSearch,cardsFiltred, location.pathname);
       console.log('nothing search isCheckBox', isCheckBox);
-      if (isCheckBox) {
+      if (isCheckBoxLocal) {
         handleSearchCheckBox(cardsFiltred);
       } else {
-        if  (location.pathname === '/movies') localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
+        (location.pathname === '/movies') ? localStorage.setItem('query_movie', JSON.stringify(cardsFiltred)) : localStorage.setItem('query_SavedMovie', JSON.stringify(cardsFiltred));
         (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery([...cardsFiltred.splice(0,50)]);
         console.log('nothing search', cardsFiltred.splice(0,50));
       }
@@ -145,14 +160,21 @@ function SearchForm(props) {
   // Обработчик переключателя короткометражек
   const handleCheckBoxButton = (e) => {
     e.preventDefault();
-    setIsCheckBox(isCheckBox =>!isCheckBox);
-    localStorage.setItem('isCheckBox', JSON.stringify(!isCheckBox));
+    (location.pathname === '/movies') ? setIsCheckBox(isCheckBox =>!isCheckBox) :  setIsCSavedMovieCheckBox(isSavedMovieCheckBox =>!isSavedMovieCheckBox);
+    (location.pathname === '/movies') ? localStorage.setItem('isCheckBox', JSON.stringify(!isCheckBox)) : localStorage.setItem('isSavedMovieCheckBox', JSON.stringify(!isSavedMovieCheckBox));
     if (!isCheckBox) {
-      (cardsFiltredQuery.length !== 0)  ?  handleSearchCheckBox(JSON.parse(localStorage.getItem("query_movie"))) :  handleSearchCheckBox(cardsData);
+      if  (location.pathname === '/movies')  {
+        (cardsFiltredQuery.length !== 0)  ?  handleSearchCheckBox(JSON.parse(localStorage.getItem("query_movie"))) :  handleSearchCheckBox(cardsData);
+      }
+      if  (location.pathname === '/saved-movies')  {
+        (cardsSavedFiltredQuery.length !== 0 && querySavedMovie !== '')  ?  handleSearchCheckBox(JSON.parse(localStorage.getItem("query_SavedMovie"))) :  handleSearchCheckBox(savedCards);
+      }
     }  else {
       let cardForSearch = [];
       (location.pathname === '/movies') ? cardForSearch = cardsData : cardForSearch = savedCards;
-      const cardsFiltred = cardForSearch.filter(card => card.nameRU.includes(query));
+      let querySearch = '';
+      (location.pathname === '/movies') ? querySearch = query : querySearch = querySavedMovie;
+      const cardsFiltred = cardForSearch.filter(card => card.nameRU.toLowerCase().includes(querySearch.toLowerCase()));
       if (location.pathname === '/movies') localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
       (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery(cardsFiltred.splice(0,50));
     }
@@ -161,9 +183,11 @@ function SearchForm(props) {
 
   // Обработчик переключателя короткометражек
   const handleSearchCheckBox = (cards) => {
+    console.log(cards);
     const cardsFiltred = cards.filter(card => card.duration < 40);
+    console.log(cardsFiltred);
     if  (location.pathname === '/movies') localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
-    (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery(cardsFiltred.splice(0,50));
+    (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery([...cardsFiltred.splice(0,50)]);
   }
 
   // функция удаления элемента из массива
@@ -251,7 +275,12 @@ function SearchForm(props) {
         <button type="button" className="searchForm__button-submit"  onClick={handleSearchQuery}></button>
       </form>
       <span id="search-input-error" className="searchForm__input-error">{errorText}</span>
-      <FilterCheckbox classTumbler={checkBoxButtonClassName} onClick={handleCheckBoxButton}/>
+      { (location.pathname === '/movies') &&
+        <FilterCheckbox classTumbler={checkBoxButtonClassName} onClick={handleCheckBoxButton}/>
+      }
+      { (location.pathname === '/saved-movies') &&
+        <FilterCheckbox classTumbler={checkBoxButtonClassNameSavedMovie} onClick={handleCheckBoxButton}/>
+      }
       { (((cardsFiltredQuery.length === 0 || query === "")  && location.pathname === '/movies')) &&
         <p className="searchForm__message-nothing">Ничего не найдено</p>
       }
@@ -272,7 +301,7 @@ function SearchForm(props) {
       {  (location.pathname === '/saved-movies') &&
         <section className="moviesList">
           <MoviesCardList isLikedCard={isLikedCard}
-                          cards={(querySavedMovie === '') ? savedCards : cardsSavedFiltredQuery}
+                          cards={(querySavedMovie === ''  && !isSavedMovieCheckBox) ? savedCards : cardsSavedFiltredQuery}
                           onClickLike={handleCardDelete}
           ></MoviesCardList>
         </section>
