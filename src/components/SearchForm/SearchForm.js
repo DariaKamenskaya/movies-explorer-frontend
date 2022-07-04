@@ -213,13 +213,15 @@ function SearchForm(props) {
   function handleCardDelete(card) {
     //если пользователь сохранял карточку, значит дизлайк карточки
     // удаляем карточку из списка сохраненных фильмов через apiMain
+    console.log(card);
     apiMain.deleteCard(card._id)
       .then((data) => {
         // удаляем карточку из спискa сохраненных фильмов
-        setSavedCards(removeItemOnce(savedCards, card));
-        const newArray = removeItemOnce(cardsSavedFiltredQuery, card);
-        setCardsSavedFiltredQuery(newArray);  //if (querySavedMovie !== "")
-        console.log(removeItemOnce(cardsSavedFiltredQuery, card));
+        const newSavedCards = savedCards.filter((item) => item._id !== card._id);
+        setSavedCards(newSavedCards);
+        const newCardsSavedFiltredQuery = cardsSavedFiltredQuery.filter((item) => item._id !== card._id);
+        setCardsSavedFiltredQuery(newCardsSavedFiltredQuery);  //if (querySavedMovie !== "")
+        console.log(newCardsSavedFiltredQuery);
       })
       .catch((err) => {
         console.log(err);
