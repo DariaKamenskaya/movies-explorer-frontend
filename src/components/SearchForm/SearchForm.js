@@ -153,12 +153,12 @@ function SearchForm(props) {
         console.log('trueCheckBox')
       } else {
         (location.pathname === '/movies') ? localStorage.setItem('query_movie', JSON.stringify(cardsFiltred)) : localStorage.setItem('query_SavedMovie', JSON.stringify(cardsFiltred));
-        (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery([...cardsFiltred.splice(0,50)]);
         if (cardsFiltred.length === 0 && location.pathname === '/saved-movies') {
           setNothingSavedFilm(true);
         } else {
           setNothingSavedFilm(false);
         }
+        (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery([...cardsFiltred.splice(0,50)]);
         console.log('nothing search', cardsFiltred.length);
       }
       setIsPreloader(false);
