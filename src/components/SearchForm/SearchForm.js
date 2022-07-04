@@ -41,7 +41,6 @@ function SearchForm(props) {
   const getStoredStateSavedMovieCheckBox = () => {
     // Извлечение из локального хранилища ранее введенного состояния для кнопки переключатель короткометражек
     const sessionIsCheckBox = localStorage.getItem("isSavedMovieCheckBox");
-    console.log('sessionIsCheckBox', sessionIsCheckBox);
     const initialIsCheckBox = (sessionIsCheckBox !== null) ? JSON.parse(localStorage.getItem("isSavedMovieCheckBox")) : false;
     return initialIsCheckBox;
   };
@@ -146,7 +145,6 @@ function SearchForm(props) {
       const cardsFiltred = cardForSearch.filter(card => card.nameRU.toLowerCase().includes(querySearch.toLowerCase()));
       if (isCheckBoxLocal) {
         handleSearchCheckBox(cardsFiltred);
-        console.log('trueCheckBox')
       } else {
         (location.pathname === '/movies') ? localStorage.setItem('query_movie', JSON.stringify(cardsFiltred)) : localStorage.setItem('query_SavedMovie', JSON.stringify(cardsFiltred));
         if (cardsFiltred.length === 0 && location.pathname === '/saved-movies') {
@@ -163,14 +161,11 @@ function SearchForm(props) {
   // Обработчик переключателя короткометражек
   const handleCheckBoxButton = (e) => {
     e.preventDefault();
-    console.log('nothing search isCheckBox', isSavedMovieCheckBox);
     (location.pathname === '/movies') ? setIsCheckBox(isCheckBox =>!isCheckBox) :  setIsCSavedMovieCheckBox(isSavedMovieCheckBox =>!isSavedMovieCheckBox);
     let isCheckBoxLocal = false;
     (location.pathname === '/movies') ? isCheckBoxLocal = isCheckBox : isCheckBoxLocal = isSavedMovieCheckBox;
-    console.log('nothing search isCheckBox', isCheckBoxLocal);
     (location.pathname === '/movies') ? localStorage.setItem('isCheckBox', JSON.stringify(!isCheckBox)) : localStorage.setItem('isSavedMovieCheckBox', JSON.stringify(!isSavedMovieCheckBox));
     if (!isCheckBoxLocal) {
-      console.log('aaa1');
       if  (location.pathname === '/movies')  {
         (cardsFiltredQuery.length !== 0)  ?  handleSearchCheckBox(JSON.parse(localStorage.getItem("query_movie"))) :  handleSearchCheckBox(cardsData);
       }
@@ -191,10 +186,7 @@ function SearchForm(props) {
 
   // Обработчик переключателя короткометражек
   const handleSearchCheckBox = (cards) => {
-    console.log('handleSearchCheckBox', cards);
     const cardsFiltred1 = cards.filter(card => card.duration < 40);
-    console.log('cardsFiltred', cardsFiltred1, cards[0].duration);
-    console.log(cards[1].duration < 40);
     if (cardsFiltred1.length === 0 && location.pathname === '/saved-movies') {
       setNothingSavedFilm(true);
     } else {

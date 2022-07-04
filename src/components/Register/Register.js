@@ -38,7 +38,6 @@ function Register({ onLogin }) {
     }
     setIsValid(target.closest("form").checkValidity());
     if (name === 'email' && !validateEmail(value)  &&  value !== "") {
-      console.log('невалидный емайл', values.email)
       setErrors({...errors, [name]: target.validationMessage, 'email': 'Невалидный email' });
       setIsValid(false);
     }
