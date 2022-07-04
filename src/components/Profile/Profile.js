@@ -22,16 +22,25 @@ function Profile(props) {
 
   const navigate = useNavigate();
 
-   // Обработчик изменения инпута обновляет стейт
-   const handleChange = (e) => {
+  // Обработчик изменения инпута обновляет стейт
+  const handleChange = (e) => {
     const { name, value } = e.target;
     const target = e.target;
-    setValues((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-    setErrors({...errors, [name]: target.validationMessage });
-    setIsValid(target.closest("form").checkValidity());
+    if (value === userData.name || value === userData.email) {
+      setValues((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+      setErrors({...errors, [name]: 'Введенное значение совпадает с текущими данными' });
+      setIsValid(false);
+    } else {
+      setValues((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+      setErrors({...errors, [name]: target.validationMessage });
+      setIsValid(target.closest("form").checkValidity());
+    }
   };
 
   const resetForm = useCallback(
@@ -66,6 +75,7 @@ function Profile(props) {
       .then((res) => {
         if(res.data){
           setIsOpenPopup(true);
+          userData.name = values.name;
         } else {
           setErrors({...errors,  'email': res.message });
           setIsValid(false);
@@ -87,7 +97,7 @@ function Profile(props) {
   return (
     <div >
       <HeaderMovies/>
-      <h1 className="welcome-title">Привет, Виталий!</h1>
+      <h1 className="welcome-title">{`Привет, ${userData.name}!`}</h1>
       <form className="profile__form" onSubmit={handleSubmit}>
         <div className="profile__form-input profile__form-input_border">
           <label className="profile__form-text">{"Имя"}</label>
