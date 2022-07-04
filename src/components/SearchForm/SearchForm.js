@@ -121,13 +121,13 @@ function SearchForm(props) {
     console.log('nothing search 0', cardsSavedFiltredQuery);
     if (querySearch === "") {
       setErrorText('Нужно ввести ключевое слово');
-      setCardsSavedFiltredQuery(...[]);
+      setCardsSavedFiltredQuery([...[]]);
       console.log('nothing search 2', cardsSavedFiltredQuery);
     } else {
       setIsPreloader(true);
       let cardForSearch = [];
       (location.pathname === '/movies') ? cardForSearch = cardsData : cardForSearch = savedCards;
-      const cardsFiltred = cardForSearch.filter(card => card.nameRU.includes(querySearch));
+      const cardsFiltred = cardForSearch.filter(card => card.nameRU.toLowerCase().includes(querySearch.toLowerCase()));
       //console.log(querySearch, cardForSearch,cardsFiltred, location.pathname);
       console.log('nothing search isCheckBox', isCheckBox);
       if (isCheckBox) {
@@ -255,7 +255,7 @@ function SearchForm(props) {
       { (((cardsFiltredQuery.length === 0 || query === "")  && location.pathname === '/movies')) &&
         <p className="searchForm__message-nothing">Ничего не найдено</p>
       }
-      { ((!cardsSavedFiltredQuery.lenght  && location.pathname === '/saved-movies')) &&
+      { ((cardsSavedFiltredQuery.lenght === 0 && location.pathname === '/saved-movies')) &&
         <p className="searchForm__message-nothing">Ничего не найдено</p>
       }
       { (isPreloader) &&
