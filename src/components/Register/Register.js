@@ -82,7 +82,7 @@ function Register({ onLogin }) {
             navigate('/movies');
           } else {
             setErrors({...errors,  'email': res.message });
-            setIsValid(false);
+            setIsValid(true);
           }
         })
         .catch((err) => {
