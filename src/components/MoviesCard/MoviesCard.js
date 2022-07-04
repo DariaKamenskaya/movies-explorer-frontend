@@ -13,7 +13,11 @@ function MoviesCard(props) {
     props.onClickLike(props.card, isSaved);
   }
 
-
+  function getTimetoMinute(time) {
+    let hours = Math.trunc(time/60);
+    let minutes = time%60
+    return hours + 'ч ' + minutes + 'с' 
+  };
 
   return(
     <article className="moviesCard">
@@ -43,7 +47,7 @@ function MoviesCard(props) {
             </button>
           }
         </div>
-        <p className="moviesCard__subtitle">{props.card.duration}</p>
+        <p className="moviesCard__subtitle">{getTimetoMinute(props.card.duration)}</p>
       </div>
     </article>
   );

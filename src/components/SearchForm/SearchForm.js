@@ -147,7 +147,7 @@ function SearchForm(props) {
       (location.pathname === '/movies') ? cardForSearch = cardsData : cardForSearch = savedCards;
       const cardsFiltred = cardForSearch.filter(card => card.nameRU.toLowerCase().includes(querySearch.toLowerCase()));
       //console.log(querySearch, cardForSearch,cardsFiltred, location.pathname);
-      console.log('nothing search isCheckBox', isCheckBoxLocal);
+      console.log('nothing search isCheckBox', isCheckBoxLocal, cardsFiltred.length);
       if (isCheckBoxLocal) {
         handleSearchCheckBox(cardsFiltred);
         console.log('trueCheckBox')
