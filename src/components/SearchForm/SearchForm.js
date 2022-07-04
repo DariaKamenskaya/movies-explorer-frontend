@@ -45,7 +45,7 @@ function SearchForm(props) {
     const initialIsCheckBox = (sessionIsCheckBox !== null) ? JSON.parse(localStorage.getItem("isSavedMovieCheckBox")) : false;
     return initialIsCheckBox;
   };
-  const [isSavedMovieCheckBox, setIsCSavedMovieCheckBox] = useState(getStoredStateSavedMovieCheckBox);
+  const [isSavedMovieCheckBox, setIsCSavedMovieCheckBox] = useState(false);
   // Извлечение из локального хранилища ранее введенного запроса
   const sessionStorageQuery = localStorage.getItem("sessionStorageQuery");
   // Стейт, в котором содержится состояние лайка карточки
@@ -134,20 +134,16 @@ function SearchForm(props) {
     if (location.pathname === '/movies')  localStorage.setItem('sessionStorageQuery', query);
     let querySearch = '';
     (location.pathname === '/movies') ? querySearch = query : querySearch = querySavedMovie;
-    console.log('nothing search 0', cardsSavedFiltredQuery);
     let isCheckBoxLocal = false;
     (location.pathname === '/movies') ? isCheckBoxLocal = isCheckBox : isCheckBoxLocal = isSavedMovieCheckBox;
     if (querySearch === "") {
       setErrorText('Нужно ввести ключевое слово');
       //setCardsSavedFiltredQuery([...[]]);
-      console.log('nothing search 2', cardsSavedFiltredQuery);
     } else {
       setIsPreloader(true);
       let cardForSearch = [];
       (location.pathname === '/movies') ? cardForSearch = cardsData : cardForSearch = savedCards;
       const cardsFiltred = cardForSearch.filter(card => card.nameRU.toLowerCase().includes(querySearch.toLowerCase()));
-      //console.log(querySearch, cardForSearch,cardsFiltred, location.pathname);
-      console.log('nothing search isCheckBox', isCheckBoxLocal, cardsFiltred.length);
       if (isCheckBoxLocal) {
         handleSearchCheckBox(cardsFiltred);
         console.log('trueCheckBox')
@@ -158,21 +154,23 @@ function SearchForm(props) {
         } else {
           setNothingSavedFilm(false);
         }
-        (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery([...cardsFiltred.splice(0,50)]);
-        console.log('nothing search', cardsFiltred.length);
+        (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery(cardsFiltred);
       }
       setIsPreloader(false);
-      console.log('nothing search 1', cardsSavedFiltredQuery);
     };
   };
 
   // Обработчик переключателя короткометражек
   const handleCheckBoxButton = (e) => {
     e.preventDefault();
+    console.log('nothing search isCheckBox', isSavedMovieCheckBox);
     (location.pathname === '/movies') ? setIsCheckBox(isCheckBox =>!isCheckBox) :  setIsCSavedMovieCheckBox(isSavedMovieCheckBox =>!isSavedMovieCheckBox);
+    let isCheckBoxLocal = false;
+    (location.pathname === '/movies') ? isCheckBoxLocal = isCheckBox : isCheckBoxLocal = isSavedMovieCheckBox;
+    console.log('nothing search isCheckBox', isCheckBoxLocal);
     (location.pathname === '/movies') ? localStorage.setItem('isCheckBox', JSON.stringify(!isCheckBox)) : localStorage.setItem('isSavedMovieCheckBox', JSON.stringify(!isSavedMovieCheckBox));
-    if (!isCheckBox) {
-      console.log('nothing search 4', cardsSavedFiltredQuery.length);
+    if (!isCheckBoxLocal) {
+      console.log('aaa1');
       if  (location.pathname === '/movies')  {
         (cardsFiltredQuery.length !== 0)  ?  handleSearchCheckBox(JSON.parse(localStorage.getItem("query_movie"))) :  handleSearchCheckBox(cardsData);
       }
@@ -185,9 +183,8 @@ function SearchForm(props) {
       let querySearch = '';
       (location.pathname === '/movies') ? querySearch = query : querySearch = querySavedMovie;
       const cardsFiltred = cardForSearch.filter(card => card.nameRU.toLowerCase().includes(querySearch.toLowerCase()));
-      console.log('nothing search 3', cardsFiltred.length);
       if (location.pathname === '/movies') localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
-      (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery(cardsFiltred.splice(0,50));
+      (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery(cardsFiltred);
     }
   }
 
@@ -195,14 +192,16 @@ function SearchForm(props) {
   // Обработчик переключателя короткометражек
   const handleSearchCheckBox = (cards) => {
     console.log('handleSearchCheckBox', cards);
-    const cardsFiltred = cards.filter(card => card.duration < 40);
-    if  (location.pathname === '/movies') localStorage.setItem('query_movie', JSON.stringify(cardsFiltred));
-    if (cardsFiltred.length === 0 && location.pathname === '/saved-movies') {
+    const cardsFiltred1 = cards.filter(card => card.duration < 40);
+    console.log('cardsFiltred', cardsFiltred1, cards[0].duration);
+    console.log(cards[1].duration < 40);
+    if (cardsFiltred1.length === 0 && location.pathname === '/saved-movies') {
       setNothingSavedFilm(true);
     } else {
       setNothingSavedFilm(false);
     }
-    (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery([...cardsFiltred.splice(0,50)]);
+    (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred1.splice(0,movieCount)) : setCardsSavedFiltredQuery(cardsFiltred1);
+    if  (location.pathname === '/movies') localStorage.setItem('query_movie', JSON.stringify(cardsFiltred1));
   }
 
   // функция удаления элемента из массива
@@ -316,7 +315,7 @@ function SearchForm(props) {
       {  (location.pathname === '/saved-movies') &&
         <section className="moviesList">
           <MoviesCardList isLikedCard={isLikedCard}
-                          cards={(querySavedMovie === ''  && isSavedMovieCheckBox) ? savedCards : cardsSavedFiltredQuery}
+                          cards={(querySavedMovie === ''  && !isSavedMovieCheckBox) ? savedCards : cardsSavedFiltredQuery}
                           onClickLike={handleCardDelete}
           ></MoviesCardList>
         </section>
