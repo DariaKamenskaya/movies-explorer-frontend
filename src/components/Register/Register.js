@@ -15,6 +15,15 @@ function Register({ onLogin }) {
 
   const navigate = useNavigate();
 
+  //функция проверки валидности емайла
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/
+      );
+  };
+
   // Обработчик изменения инпута обновляет стейт
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,16 +33,15 @@ function Register({ onLogin }) {
       [name]: value,
     }));
     setErrors({...errors, [name]: target.validationMessage });
-    if (values['name'] === "") {
-      setErrors({...errors, [name]: target.validationMessage, 'name': 'Это поле необходимо заполнить' });
-    }
-    if (values['email'] === "") {
-      setErrors({...errors, [name]: target.validationMessage, 'email': 'Это поле необходимо заполнить' });
-    }
-    if (values['password'] === "") {
-      setErrors({...errors, [name]: target.validationMessage, 'password': 'Это поле необходимо заполнить' });
+    if (value === "") {
+      setErrors({...errors, [name]: 'Это поле необходимо заполнить'});
     }
     setIsValid(target.closest("form").checkValidity());
+    if (name === 'email' && !validateEmail(value)  &&  value !== "") {
+      console.log('невалидный емайл', values.email)
+      setErrors({...errors, [name]: target.validationMessage, 'email': 'Невалидный email' });
+      setIsValid(false);
+    }
   };
 
   const resetForm = useCallback(
