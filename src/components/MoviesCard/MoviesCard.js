@@ -22,14 +22,24 @@ function MoviesCard(props) {
   return(
     <article className="moviesCard">
       {(location.pathname === '/movies') &&
-        <img src={`https://api.nomoreparties.co${props.card.image.url}`}
-        alt={'Постер'}
-        className="moviesCard__image"  />
+        <a rel="noopener noreferrer"
+          target="_blank"
+          href={props.card.trailerLink}
+          className="moviesCard__link">
+          <img src={`https://api.nomoreparties.co${props.card.image.url}`}
+               alt={'Постер'}
+               className="moviesCard__image"  />
+       </a> 
       }
       {(location.pathname === '/saved-movies') &&
-        <img src={props.card.image}
-        alt={'Постер'}
-        className="moviesCard__image"  />
+        <a rel="noopener noreferrer"
+           target="_blank"
+           href={props.card.trailerLink}
+           className="moviesCard__link">
+          <img src={props.card.image}
+               alt={'Постер'}
+               className="moviesCard__image"  />
+        </a>
       }
       <div className="moviesCard__title-block">
         <div className="moviesCard__likes">

@@ -118,3 +118,10 @@
 .moviesCard__close-button:hover {
     opacity: 1.0;
 }
+
+.moviesCard__link {
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    text-decoration: none;
+}
