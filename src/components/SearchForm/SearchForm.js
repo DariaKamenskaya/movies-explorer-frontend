@@ -200,8 +200,9 @@ function SearchForm(props) {
     } else {
       setNothingSavedFilm(false);
     }
-    (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred1.splice(0,movieCount)) : setCardsSavedFiltredQuery(cardsFiltred1);
     if  (location.pathname === '/movies') localStorage.setItem('query_movie', JSON.stringify(cardsFiltred1));
+    (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred1.splice(0,movieCount)) : setCardsSavedFiltredQuery(cardsFiltred1);
+
   }
 
   // функция удаления элемента из массива
