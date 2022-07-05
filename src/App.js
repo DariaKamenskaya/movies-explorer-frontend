@@ -22,6 +22,7 @@ import { CurrentUserContext } from './contexts/CurrentUserContext';
 import * as auth from './utils/auth';
 import useWindowDimensions  from './utils/windowsUpdate';
 import RequireAuth from './utils/RequireAuth';
+import RequireAuthUser from './utils/RequireAuthUser';
 
 
 
@@ -212,12 +213,16 @@ function App() {
           } 
         />
         <Route
-          path="/signin" 
-          element={<Login onLogin={handleLogin}/>} 
+          path="/signin"
+          element={ <RequireAuthUser loggedIn={loggedIn}>
+                      <Login onLogin={handleLogin}/>
+                    </RequireAuthUser> } 
         />
         <Route
           path="/signup"
-          element={<Register onLogin={handleLogin}/>}
+          element={ <RequireAuthUser loggedIn={loggedIn}>
+                      <Register onLogin={handleLogin}/>
+                    </RequireAuthUser>}
         />
       </Routes>
     </div>
