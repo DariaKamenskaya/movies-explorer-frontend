@@ -23,6 +23,7 @@ import * as auth from './utils/auth';
 import useWindowDimensions  from './utils/windowsUpdate';
 import RequireAuth from './utils/RequireAuth';
 import RequireAuthUser from './utils/RequireAuthUser';
+import PageNotFound from './components/PageNotFound/PageNotFound';
 
 
 
@@ -223,6 +224,10 @@ function App() {
           element={ <RequireAuthUser loggedIn={loggedIn}>
                       <Register onLogin={handleLogin}/>
                     </RequireAuthUser>}
+        />
+        <Route 
+          path="*"
+          element={<PageNotFound />}
         />
       </Routes>
     </div>

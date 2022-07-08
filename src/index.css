@@ -55,4 +55,7 @@ body {
 @import url(./components/Profile/Profile.css);
 /* block "Login" */
 @import url(./components/Login/Login.css);
+/* block "PageNotFound" */
+@import url(./components/PageNotFound/PageNotFound.css);
+
 
