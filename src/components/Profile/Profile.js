@@ -83,12 +83,14 @@ function Profile(props) {
       })
       .catch((err) => {
         console.log(err); // "Что-то пошло не так: ..."
+        if (err === 'Что-то пошло не так: 409')  setErrors({...errors,  'email': 'Пользователь с таким email уже зарегестрирован' });
         return [];
       });
   };
 
 
   function closePopup() {
+    props.handleNewData(values); 
     setIsOpenPopup(false);
   };
 

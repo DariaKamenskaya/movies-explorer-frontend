@@ -11,8 +11,6 @@ import Promo from './components/Promo/Promo';
 import Techs from './components/Techs/Techs';
 import HeaderMovies from './components/HeaderMovies/HeaderMovies';
 import SearchForm from './components/SearchForm/SearchForm';
-import MoviesCardList from './components/MoviesCardList/MoviesCardList';
-import ButtonMore from './components/ButtonMore/ButtonMore';
 import Profile from './components/Profile/Profile';
 import Login from './components/Login/Login';
 import Register from './components/Register/Register';
@@ -128,6 +126,11 @@ function App() {
     navigate('/');
   };
 
+  const handleNewUserData = (userData) => {
+    console.log(userData);
+    setCurrentUser(userData);
+  };
+
 
 
 
@@ -209,7 +212,7 @@ function App() {
           path="/profile"
           element={
             <RequireAuth loggedIn={loggedIn}>
-              <Profile handleResetData={handleLogOut}/>
+              <Profile handleResetData={handleLogOut} handleNewData={handleNewUserData}/>
             </RequireAuth>
           } 
         />
