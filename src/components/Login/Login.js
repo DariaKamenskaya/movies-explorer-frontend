@@ -14,6 +14,15 @@ function Login({ onLogin }) {
 
   const navigate = useNavigate();
 
+  //функция проверки валидности емайла
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /\S+@\S+\.\S+/
+      );
+  };
+
 
   // Обработчик изменения инпута обновляет стейт
   const handleChange = (e) => {
@@ -24,13 +33,11 @@ function Login({ onLogin }) {
       [name]: value,
     }));
     setErrors({...errors, [name]: target.validationMessage });
-/*       if (values['email'] === "") {
-        setErrors({...errors, [name]: target.validationMessage, 'email': 'Это поле необходимо заполнить' });
-      }
-      if (values['password'] === "") {
-        setErrors({...errors, [name]: target.validationMessage, 'password': 'Это поле необходимо заполнить' });
-      } */
-      setIsValid(target.closest("form").checkValidity());
+    setIsValid(target.closest("form").checkValidity());
+    if (name === 'email' && !validateEmail(value)  &&  value !== "") {
+      setErrors({...errors, [name]: target.validationMessage, 'email': 'Невалидный email' });
+      setIsValid(false);
+    }
   };
 
   const resetForm = useCallback(
@@ -69,6 +76,9 @@ function Login({ onLogin }) {
             localStorage.setItem('jwt', res.token);
             onLogin(values.email);  // обновляем стейт внутри App.js
             navigate("/movies"); // и переадресуем пользователя!
+          } else {
+            setErrors({...errors,  'email': res.message });
+            setIsValid(true);
           }
         })
        .catch((err) => {

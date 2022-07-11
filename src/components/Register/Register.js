@@ -20,7 +20,7 @@ function Register({ onLogin }) {
     return String(email)
       .toLowerCase()
       .match(
-        /^[-a-z0-9!#$%&'*+/=?^_`{|}~]+(?:\.[-a-z0-9!#$%&'*+/=?^_`{|}~]+)*@(?:[a-z0-9]([-a-z0-9]{0,61}[a-z0-9])?\.)*(?:aero|arpa|asia|biz|cat|com|coop|edu|gov|info|int|jobs|mil|mobi|museum|name|net|org|pro|tel|travel|[a-z][a-z])$/
+        /\S+@\S+\.\S+/
       );
   };
 
@@ -78,8 +78,7 @@ function Register({ onLogin }) {
                 navigate('/movies');
               }
             })
-            .catch((err) => console.log(err));
-            //navigate('/movies');
+            .catch((err) => console.log(err.message));
           } else {
             setErrors({...errors,  'email': res.message });
             setIsValid(true);

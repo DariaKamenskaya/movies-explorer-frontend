@@ -20,7 +20,15 @@ function Profile(props) {
   const [isValid, setIsValid] = React.useState(false);
   const [isOpenPopup, setIsOpenPopup] = React.useState(false);
 
-  const navigate = useNavigate();
+
+  //функция проверки валидности емайла
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /\S+@\S+\.\S+/
+      );
+  };
 
   // Обработчик изменения инпута обновляет стейт
   const handleChange = (e) => {
@@ -40,6 +48,10 @@ function Profile(props) {
       }));
       setErrors({...errors, [name]: target.validationMessage });
       setIsValid(target.closest("form").checkValidity());
+    }
+    if (name === 'email' && !validateEmail(value)  &&  value !== "") {
+      setErrors({...errors, [name]: target.validationMessage, 'email': 'Невалидный email' });
+      setIsValid(false);
     }
   };
 

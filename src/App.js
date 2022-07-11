@@ -127,7 +127,6 @@ function App() {
   };
 
   const handleNewUserData = (userData) => {
-    console.log(userData);
     setCurrentUser(userData);
   };
 
