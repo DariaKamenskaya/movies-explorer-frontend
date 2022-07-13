@@ -6,6 +6,7 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import ButtonMore from '../ButtonMore/ButtonMore';
 import Preloader from '../Preloader/Preloader'
 import { apiMain } from '../../utils/MainApi';
+import { apiBeatfilmMovies } from '../../utils/MoviesApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function SearchForm(props) {
@@ -75,6 +76,9 @@ function SearchForm(props) {
   }, [props.windowSize, userData])
 
 
+  useEffect(() => {
+    
+  }, [isPreloader])
 
 
   const handleChangeWidth = () => {
@@ -128,6 +132,7 @@ function SearchForm(props) {
   
   // Обработчик поиска
   const handleSearchQuery = (evn) => {
+    //setIsPreloader((isPreloader) => !isPreloader);
     setErrorText(''); 
     evn.preventDefault();
     if (location.pathname === '/movies')  localStorage.setItem('sessionStorageQuery', query);
@@ -141,7 +146,30 @@ function SearchForm(props) {
     } else {
       setIsPreloader(true);
       let cardForSearch = [];
-      (location.pathname === '/movies') ? cardForSearch = cardsData : cardForSearch = savedCards;
+      if (location.pathname === '/movies') {
+        console.log('jhf');
+        apiBeatfilmMovies.getInitialMovies()
+        .then((res) => {
+          cardForSearch = res;
+          console.log(cardForSearch);
+          setIsPreloader(false);
+          searchQuery(querySearch, isCheckBoxLocal, res);
+        })
+        .catch((err) => {
+          console.log(err); // "Что-то пошло не так: ..."
+          return [];
+        }) 
+      } else {
+        searchQuery(querySearch, isCheckBoxLocal, savedCards);
+      } 
+      
+    }
+  };
+    
+
+
+  // Функция поиска поиска
+  const searchQuery = (querySearch, isCheckBoxLocal, cardForSearch) => {
       const cardsFiltred = cardForSearch.filter(card => card.nameRU.toLowerCase().includes(querySearch.toLowerCase()));
       if (isCheckBoxLocal) {
         handleSearchCheckBox(cardsFiltred);
@@ -152,11 +180,11 @@ function SearchForm(props) {
         } else {
           setNothingSavedFilm(false);
         }
+        //setIsPreloader(false);
         (location.pathname === '/movies') ? setCardsFiltredQuery(cardsFiltred.splice(0,movieCount)) : setCardsSavedFiltredQuery(cardsFiltred);
       }
-      setIsPreloader(false);
-    };
   };
+
 
   // Обработчик переключателя короткометражек
   const handleCheckBoxButton = (e) => {
@@ -288,16 +316,13 @@ function SearchForm(props) {
       { (location.pathname === '/saved-movies') &&
         <FilterCheckbox classTumbler={checkBoxButtonClassNameSavedMovie} onClick={handleCheckBoxButton}/>
       }
-      { (((cardsFiltredQuery.length === 0 || query === "")  && location.pathname === '/movies')) &&
+      { (((cardsFiltredQuery.length === 0 )  && location.pathname === '/movies')) &&
         <p className="searchForm__message-nothing">Ничего не найдено</p>
       }
       { (nothingSavedFilm  && location.pathname === '/saved-movies') &&
         <p className="searchForm__message-nothing">Ничего не найдено</p>
       }
-      { (isPreloader) &&
-          <Preloader />
-      }
-      { ((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length !== 0  && (location.pathname === '/movies')) &&
+      { (isPreloader) ? <Preloader /> : ((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length !== 0  && (location.pathname === '/movies')) &&
         <section className="moviesList">
           <MoviesCardList isLikedCard={isLikedCard}
                           cards={cardsFiltredQuery}
@@ -313,7 +338,7 @@ function SearchForm(props) {
           ></MoviesCardList>
         </section>
       }
-      {((query !== "" || sessionStorageQuery !== "") && cardsFiltredQuery.length === movieCount && cardsFiltredQuery.length > 3 && (location.pathname === '/movies')) &&
+      {((query !== "" || sessionStorageQuery !== "") &&  !isPreloader && cardsFiltredQuery.length === movieCount && cardsFiltredQuery.length > 3 && (location.pathname === '/movies')) &&
         <ButtonMore onClick={handleRander}/>
       }
     </main>
