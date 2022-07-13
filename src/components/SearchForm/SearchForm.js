@@ -31,7 +31,7 @@ function SearchForm(props) {
   // Стейт, в котором содержится сообщение об ошибке
   const [errorText, setErrorText] = useState("");
   // Стейт, в котором содержится флаг переключателя короткометражек
-  const getStoredStateCheckBox = (cardsData) => {
+  const getStoredStateCheckBox = () => {
     // Извлечение из локального хранилища ранее введенного состояния для кнопки переключатель короткометражек
     const sessionIsCheckBox = localStorage.getItem("isCheckBox");
     const initialIsCheckBox = (sessionIsCheckBox !== null) ? JSON.parse(localStorage.getItem("isCheckBox")) : false;
@@ -132,7 +132,6 @@ function SearchForm(props) {
   
   // Обработчик поиска
   const handleSearchQuery = (evn) => {
-    //setIsPreloader((isPreloader) => !isPreloader);
     setErrorText(''); 
     evn.preventDefault();
     if (location.pathname === '/movies')  localStorage.setItem('sessionStorageQuery', query);
@@ -142,16 +141,11 @@ function SearchForm(props) {
     (location.pathname === '/movies') ? isCheckBoxLocal = isCheckBox : isCheckBoxLocal = isSavedMovieCheckBox;
     if (querySearch === "") {
       setErrorText('Нужно ввести ключевое слово');
-      //setCardsSavedFiltredQuery([...[]]);
     } else {
-      setIsPreloader(true);
-      let cardForSearch = [];
       if (location.pathname === '/movies') {
-        console.log('jhf');
+        setIsPreloader(true);
         apiBeatfilmMovies.getInitialMovies()
         .then((res) => {
-          cardForSearch = res;
-          console.log(cardForSearch);
           setIsPreloader(false);
           searchQuery(querySearch, isCheckBoxLocal, res);
         })
@@ -330,7 +324,7 @@ function SearchForm(props) {
           ></MoviesCardList>
         </section>
       }
-      {  (location.pathname === '/saved-movies') &&
+      {  (location.pathname === '/saved-movies'  &&  (nothingSavedFilm === false)) &&
         <section className="moviesList">
           <MoviesCardList isLikedCard={isLikedCard}
                           cards={(querySavedMovie === ''  && !isSavedMovieCheckBox) ? savedCards : cardsSavedFiltredQuery}
@@ -338,7 +332,7 @@ function SearchForm(props) {
           ></MoviesCardList>
         </section>
       }
-      {((query !== "" || sessionStorageQuery !== "") &&  !isPreloader && cardsFiltredQuery.length === movieCount && cardsFiltredQuery.length > 3 && (location.pathname === '/movies')) &&
+      {((query !== "" || sessionStorageQuery !== "") &&  (isPreloader === false) && cardsFiltredQuery.length === movieCount && cardsFiltredQuery.length > 3 && (location.pathname === '/movies')) &&
         <ButtonMore onClick={handleRander}/>
       }
     </main>
