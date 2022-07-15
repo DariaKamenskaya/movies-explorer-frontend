@@ -34,6 +34,25 @@
   box-sizing: border-box;
 }
 
+.searchForm__message-nothing {
+  margin: 0;
+  margin-top: 60px;
+  margin-bottom: 140px;
+  padding: 0;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+  text-align: center;
+  color: #8B8B8B;
+  width: 100%;
+  height: 40px;
+  border: none;
+  background: transparent;
+  box-sizing: border-box;
+}
+
 
 .searchForm__button-search {
   margin: 0;
@@ -77,6 +96,18 @@
     opacity: .5;
 }
 
+
+.searchForm__input-error {
+  margin: 0;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 15px;
+  color: #FF0000;
+  display: flex;
+  justify-content: center;
+}
 
 @media screen and (max-width: 768px) {
   .searchForm {
