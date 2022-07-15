@@ -324,7 +324,7 @@ function SearchForm(props) {
           ></MoviesCardList>
         </section>
       }
-      {  (location.pathname === '/saved-movies'  &&  (nothingSavedFilm === false)) &&
+      {  (location.pathname === '/saved-movies' ) &&
         <section className="moviesList">
           <MoviesCardList isLikedCard={isLikedCard}
                           cards={(querySavedMovie === ''  && !isSavedMovieCheckBox) ? savedCards : cardsSavedFiltredQuery}
